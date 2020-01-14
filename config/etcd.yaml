@@ -1,0 +1,125 @@
+  etcd1:
+    container_name: etcd1
+    image: 10.77.70.142:5000/etcd:v3.3.10
+    ports:
+      - "2379:2379"
+      - "2380:2380"
+    environment:
+      - TZ=CST-8
+      - LANG=zh_CN.UTF-8
+    networks:
+      tendermintnet1:
+        aliases:
+          - etcd1
+    command: /usr/local/bin/etcd
+      -name etcd1
+      -advertise-client-urls http://etcd1:2379
+      -listen-client-urls http://0.0.0.0:2379
+      -initial-advertise-peer-urls http://etcd1:2380
+      -listen-peer-urls http://0.0.0.0:2380
+      -initial-cluster-token docker-etcd
+      -initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380,etcd4=http://etcd4:2380
+      -initial-cluster-state new
+    volumes:
+      - "/usr/share/ca-certificates/:/etc/ssl/certs"
+      # - "/data/config/etcd/ca-certificates/:/etc/ssl/certs"
+    labels:
+      - project.source=
+      - project.extra=public-image
+      - project.depends=
+      - project.owner=LHZ
+
+  etcd2:
+    container_name: etcd2
+    image: 10.77.70.142:5000/etcd:v3.3.10
+    ports:
+      - "3379:2379"
+      - "3380:2380"
+    environment:
+      - TZ=CST-8
+      - LANG=zh_CN.UTF-8
+    networks:
+      tendermintnet1:
+        aliases:
+          - etcd2
+    command: /usr/local/bin/etcd
+      -name etcd2
+      -advertise-client-urls http://etcd2:2379
+      -listen-client-urls http://0.0.0.0:2379
+      -initial-advertise-peer-urls http://etcd2:2380
+      -listen-peer-urls http://0.0.0.0:2380
+      -initial-cluster-token docker-etcd
+      -initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380,etcd4=http://etcd4:2380
+      -initial-cluster-state new
+    volumes:
+      - "/usr/share/ca-certificates/:/etc/ssl/certs"
+      # - "/data/config/etcd/ca-certificates/:/etc/ssl/certs"
+    labels:
+      - project.source=
+      - project.extra=public-image
+      - project.depends=
+      - project.owner=LHZ
+  etcd3:
+    container_name: etcd3
+    image: 10.77.70.142:5000/etcd:v3.3.10
+    ports:
+      - "4379:2379"
+      - "4380:2380"
+    environment:
+      - TZ=CST-8
+      - LANG=zh_CN.UTF-8
+    networks:
+      tendermintnet1:
+        aliases:
+          - etcd3
+    command: /usr/local/bin/etcd
+      -name etcd3
+      -advertise-client-urls http://etcd3:2379
+      -listen-client-urls http://0.0.0.0:2379
+      -initial-advertise-peer-urls http://etcd3:2380
+      -listen-peer-urls http://0.0.0.0:2380
+      -initial-cluster-token docker-etcd
+      -initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380,etcd4=http://etcd4:2380
+      -initial-cluster-state new
+    volumes:
+      - "/usr/share/ca-certificates/:/etc/ssl/certs"
+      # - "/data/config/etcd/ca-certificates/:/etc/ssl/certs"
+    labels:
+      - project.source=
+      - project.extra=public-image
+      - project.depends=
+      - project.owner=LHZ
+  etcd4:
+    container_name: etcd4
+    image: 10.77.70.142:5000/etcd:v3.3.10
+    ports:
+      - "5379:2379"
+      - "5380:2380"
+    environment:
+      - TZ=CST-8
+      - LANG=zh_CN.UTF-8
+    networks:
+      tendermintnet1:
+        aliases:
+          - etcd4
+    command: /usr/local/bin/etcd
+      -name etcd4
+      -advertise-client-urls http://etcd4:2379
+      -listen-client-urls http://0.0.0.0:2379
+      -initial-advertise-peer-urls http://etcd4:2380
+      -listen-peer-urls http://0.0.0.0:2380
+      -initial-cluster-token docker-etcd
+      -initial-cluster etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380,etcd4=http://etcd4:2380
+      -initial-cluster-state new
+    volumes:
+      - "/usr/share/ca-certificates/:/etc/ssl/certs"
+      # - "/data/config/etcd/ca-certificates/:/etc/ssl/certs"
+    labels:
+      - project.source=
+      - project.extra=public-image
+      - project.depends=
+      - project.owner=LHZ
+
+networks:
+  tendermintnet1:
+    driver: host

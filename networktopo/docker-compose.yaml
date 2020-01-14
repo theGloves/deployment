@@ -1,0 +1,26 @@
+version: 2
+services:
+  TopoANode1:
+    image: 10.77.70.142:5000/tenderminttopo:v0.4
+    container_name: TopoANode1
+    hostname: TopoANode1
+    tty: true
+    volumes: ['/home/centos/NFS500/networktopo/TopoANode1/config:/tendermint/config']
+    environment: [TASKID=A]
+    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=de12cbeef40be0db131068e084027650384a5633@TTANode2:26656
+        --moniker=`hostname` --proxy_app=persistent_kvstore']
+    networks:
+      tendermintnet1:
+        aliases: [ttAnode1]
+  TopoANode2:
+    image: 10.77.70.142:5000/tenderminttopo:v0.4
+    container_name: TopoANode2
+    hostname: TopoANode2
+    tty: true
+    volumes: ['/home/centos/NFS500/networktopo/TopoANode2/config:/tendermint/config']
+    environment: [TASKID=A]
+    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=348fa1dbca40ec6739a07d7851273df714571fe9@TTANode1:26656
+        --moniker=`hostname` --proxy_app=persistent_kvstore']
+    networks:
+      tendermintnet1:
+        aliases: [ttAnode2]
