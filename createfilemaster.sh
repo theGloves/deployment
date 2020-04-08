@@ -1,10 +1,13 @@
 #!/bin/bash
 node_cnt=$1
+workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
+ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
 shard=("A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T")
 file_num=$2
-rm -r network
-rm -f /home/linyihui/bushu/topogensis.json
-rm -f  /home/linyihui/bushu/shard.json
+
+rm -r $workdir/network
+rm -f $workdir/topogensis.json
+rm -f $workdir/shard.json
 for (( j = 1; j <= $file_num; j++ ))
 do
 	
@@ -25,33 +28,33 @@ sed -i "s/{version: 2}/version: 2/g" test.yaml
 cat config/net.yaml >> test.yaml
 sed -i "s/'true'/true/" test.yaml
 
-mkdir /home/linyihui/bushu/network
-chmod 777 /home/linyihui/bushu/network
+mkdir $workdir/network
+chmod 777 $workdir/network
 for ((j=1;j<=$file_num;j++))
 do	
 	count=$(($j-1))
 	tmp=${shard[$count]} 
 	for (( i = 1; i <= $node_cnt; i++ )); 
 	do
-		mv  /home/linyihui/bushu/TT${tmp}Node${i} /home/linyihui/bushu/network
+		mv  $workdir/TT${tmp}Node${i} $workdir/network
 	done 
 
 done
 
 chmod 777 test.yaml
 mv test.yaml network/docker-compose.yaml
-cd /home/linyihui/go/src/github.com/tendermint/tendermint
+cd $ted_dir
 rm -rf network
-cd /home/linyihui/bushu
-cp -r network /home/linyihui/go/src/github.com/tendermint/tendermint/
-chmod -R 777 /home/linyihui/go/src/github.com/tendermint/tendermint/network
-cd /home/linyihui/bushu
+cd $workdir
+cp -r network $ted_dir/
+chmod -R 777 $ted_dir/network
+cd $workdir
 chmod 777 topogensis.json
-mv topogensis.json /home/linyihui/bushu/network
+mv topogensis.json $workdir/network
 
 
 python3 py/info.py
-chmod 777 /home/linyihui/bushu/network/shard.json
-chmod 777 /home/linyihui/bushu/network/data.json
-mv /home/linyihui/bushu/network/shard.json /home/linyihui/bushu/config/
-mv /home/linyihui/bushu/network/data.json  /home/linyihui/bushu/config/
+chmod 777 $workdir/network/shard.json
+chmod 777 $workdir/network/data.json
+mv /$workdir/network/shard.json $workdir/config/
+mv $workdir/network/data.json  $workdir/config/

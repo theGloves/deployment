@@ -4,6 +4,11 @@ shard=$2
 shard_count=$3
 shard_name=$4
 shard_now=$5
+workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
+ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
+ted_bin=$(echo $(cat config/config.json | jq ".projectbin")|sed 's/\"//g')
+
+
 #./init_data.sh 3 A  
 is_osx () {
     [[ "$OSTYPE" =~ ^darwin ]] || return 1
@@ -36,7 +41,7 @@ init
 
 default_genesis="./node1_data/config/genesis.json"
 if [[ $shard_now = 1 ]];then
-    echo "[" >> /home/linyihui/bushu/topogensis.json
+    echo "[" >> $workdir/topogensis.json
 fi
 Node_str=""
 	for (( i = 1; i <= $node_cnt; i++ )); do
@@ -61,7 +66,7 @@ Node_str=""
 		echo $(cat $default_genesis | jq ".validators |= .+ $(cat node${i}_data/config/genesis.json | jq '.validators')") > $default_genesis
 	    fi
 
-        #echo "TT${shard_name}Node$i $node_id"$(cat $default_genesis | jq ".chain_id") >> /home/linyihui/bushu/topogensis.json
+        #echo "TT${shard_name}Node$i $node_id"$(cat $default_genesis | jq ".chain_id") >> $workdir/topogensis.json
         nodekey="./node${i}_data/config/node_key.json"
         priv_validator_key="./node${i}_data/config/priv_validator_key.json"
 	    echo $(cat $default_genesis | jq ".validators[$i-1].name = \"TT${shard_name}Node$i\" ") > $default_genesis
@@ -74,7 +79,7 @@ Node_str=""
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
                
-            }]" >> /home/linyihui/bushu/topogensis.json
+            }]" >> $workdir/topogensis.json
         elif [[ ${i} = 1 ]];then
              echo "[{
                 \"ShardName\":\"$(($shard_now-1))\",
@@ -82,7 +87,7 @@ Node_str=""
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
-            }," >> /home/linyihui/bushu/topogensis.json
+            }," >> $workdir/topogensis.json
         else 
             echo "{
                 \"ShardName\":\"$(($shard_now-1))\",
@@ -90,7 +95,7 @@ Node_str=""
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
-            }," >> /home/linyihui/bushu/topogensis.json
+            }," >> $workdir/topogensis.json
         fi
 	done
 
@@ -104,24 +109,24 @@ python3 py/reBuildDCmaster.py $node_cnt $Node_str $shard $shard_count
 #将genesis.json统一拷贝
 echo $(cat $default_genesis | jq ".validators[0].power = \"1000\" ") > $default_genesis
 if [[ $shard_count = $shard_now ]];then
-    echo "]" >> /home/linyihui/bushu/topogensis.json
+    echo "]" >> $workdir/topogensis.json
     if [[ $shard_now = 2 ]];then
-    echo $(cat $default_genesis )"]" >> /home/linyihui/bushu/shard.json 
+    echo $(cat $default_genesis )"]" >> $workdir/shard.json 
     elif [[ $shard_count = 1 ]];then
-        echo  "["$(cat $default_genesis )"]" >> /home/linyihui/bushu/shard.json 
+        echo  "["$(cat $default_genesis )"]" >> $workdir/shard.json 
     else
-    echo $(cat $default_genesis )"]" >> /home/linyihui/bushu/shard.json 
+    echo $(cat $default_genesis )"]" >> $workdir/shard.json 
     fi
 else
     if [[ $shard_now = 1 ]];then 
-         echo "," >> /home/linyihui/bushu/topogensis.json
-         echo "["$(cat $default_genesis )"," >> /home/linyihui/bushu/shard.json 
+         echo "," >> $workdir/topogensis.json
+         echo "["$(cat $default_genesis )"," >> $workdir/shard.json 
     else 
-    echo "," >> /home/linyihui/bushu/topogensis.json
-    echo $(cat $default_genesis ) "," >> /home/linyihui/bushu/shard.json
+    echo "," >> $workdir/topogensis.json
+    echo $(cat $default_genesis ) "," >> $workdir/shard.json
     fi
 fi
-chmod 777 /home/linyihui/bushu/shard.json
+chmod 777 $workdir/shard.json
 #echo $(cat $default_genesis | jq ".validators[1].power = \"100\" ") > $default_genesis
 for (( i = 2; i <= $node_cnt; i++ )); do
     cp -f $default_genesis ./node${i}_data/config/genesis.json

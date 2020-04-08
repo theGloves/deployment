@@ -4,6 +4,18 @@
 主要是生成所需要的配置文件。
 
 其中包括：1.节点信息配置文件。2.生成tendermint镜像。3.与云平台进行交互。4.测试工具的上传与测试。
+# 初始化配置
+
+记得配置参数，需要三个：1.tendermint项目地址。2.gobin的地址。3.该项目的地址。
+
+参数为
+```json
+{
+    "projectpwd":"/home/linyihui/go/src/github.com/tendermint/tendermint",
+    "projectbin":"/home/linyihui/go/bin",
+    "depolymentpwd":"/home/linyihui/go/src/github.com/deployment"
+}
+```
 
 # 链初始化与启动脚本
 - 主链模式

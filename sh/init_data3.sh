@@ -4,6 +4,10 @@ shard=$2
 shard_count=$3
 shard_name=$4
 shard_now=$5
+workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
+ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
+ted_bin=$(echo $(cat config/config.json | jq ".projectbin")|sed 's/\"//g')
+
 #./init_data.sh 3 A  
 is_osx () {
     [[ "$OSTYPE" =~ ^darwin ]] || return 1
@@ -60,7 +64,7 @@ Node_str=""
 		echo $(cat $default_genesis | jq ".validators |= .+ $(cat node${i}_data/config/genesis.json | jq '.validators')") > $default_genesis
 	    fi
 
-        #echo "TT${shard_name}Node$i $node_id"$(cat $default_genesis | jq ".chain_id") >> /home/linyihui/bushu/topogensis.json
+        #echo "TT${shard_name}Node$i $node_id"$(cat $default_genesis | jq ".chain_id") >> $workdir/topogensis.json
         nodekey="./node${i}_data/config/node_key.json"
         priv_validator_key="./node${i}_data/config/priv_validator_key.json"
 	    echo $(cat $default_genesis | jq ".validators[$i-1].name = \"TT${shard_name}Node$i\" ") > $default_genesis
