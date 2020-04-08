@@ -1,4 +1,4 @@
-files/*
+files/*.tar
 network*
 
 .DS_Store
