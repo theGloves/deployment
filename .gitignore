@@ -2,3 +2,7 @@
 network*
 *.tar
 .DS_Store
+node1
+node2
+shard.json
+sum.log
