@@ -3,28 +3,28 @@
                 "ShardName":"0",
                 "NodeName":"TTANode1",
                 "Coordinate":"0",
-                "Peerid":"6d8752a98f516dd6e87d5eced666299d9935790a",
+                "Peerid":"bed6d5e2102c4fa03b026a5486a1e31c809a88a1",
                 "Neighbor":""
             },
 {
                 "ShardName":"0",
                 "NodeName":"TTANode2",
                 "Coordinate":"1",
-                "Peerid":"de61115623fc2537b4928def5edb5e01684dc028",
+                "Peerid":"96b23a9057a9c4d523b4d520e494146524c70762",
                 "Neighbor":""
             },
 {
                 "ShardName":"0",
                 "NodeName":"TTANode3",
                 "Coordinate":"2",
-                "Peerid":"1d81032102187eb255bf6adabd2958579de02206",
+                "Peerid":"475b74f965fb76cb68ba7ff80bb04e93c7a20379",
                 "Neighbor":""
             },
 {
                 "ShardName":"0",
                 "NodeName":"TTANode4",
                 "Coordinate":"3",
-                "Peerid":"f626b5b6787365c602f4fd807459e30f1b0fb5f0",
+                "Peerid":"f4027fe4206b4f2c71ab02d9db2e7cf1bcfc6908",
                 "Neighbor":""
                
             }]
@@ -33,28 +33,28 @@
                 "ShardName":"1",
                 "NodeName":"TTBNode1",
                 "Coordinate":"0",
-                "Peerid":"d94e862669f3f96f9612c9f01e8a1f0700e43a9c",
+                "Peerid":"0a4d35a04c44ec286bd042cccc0142f7e7fccf5d",
                 "Neighbor":""
             },
 {
                 "ShardName":"1",
                 "NodeName":"TTBNode2",
                 "Coordinate":"1",
-                "Peerid":"a2a4d4eb8216f3b032df894a8f01142dc83bde26",
+                "Peerid":"8c4eaee3d76eaa90e816f6dcbdd8b229d937edff",
                 "Neighbor":""
             },
 {
                 "ShardName":"1",
                 "NodeName":"TTBNode3",
                 "Coordinate":"2",
-                "Peerid":"3eaaa6bf81cbd504fe0fa9103a5e21fb37fff1b1",
+                "Peerid":"7db04e5f10bcbebea7e95c5d11c09dcc4d69aa40",
                 "Neighbor":""
             },
 {
                 "ShardName":"1",
                 "NodeName":"TTBNode4",
                 "Coordinate":"3",
-                "Peerid":"b5ad183cf95247206f7c4f031b6c231c176b3ab5",
+                "Peerid":"224cfa56f6da5291a8df5082df5120b8811782d4",
                 "Neighbor":""
                
             }]

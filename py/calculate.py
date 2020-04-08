@@ -3,6 +3,7 @@ data = []
 sum = 0
 count = 0
 shard_count = int(sys.argv[1])
+n = int(sys.argv[2])
 for line in open("sum.log","r"):
 	a = line[:-1]
 	a = float(a)
@@ -11,6 +12,9 @@ for line in open("sum.log","r"):
 if shard_count == 0:
 	print sum 
 else:
-	print sum/2
+	if n > 10000:
+		print sum/count
+	else:
+		print (sum*n)/(n+2)
 
 
