@@ -1,0 +1,4 @@
+
+networks:
+  tendermintnet1:
+    driver: host

@@ -22,7 +22,7 @@ do
 done
 rm -rf docker-compose.yaml
 sed -i "s/{version: 2}/version: 2/g" test.yaml
-cat config/etcd.yaml >> test.yaml
+cat config/net.yaml >> test.yaml
 sed -i "s/'true'/true/" test.yaml
 
 mkdir /home/linyihui/bushu/network

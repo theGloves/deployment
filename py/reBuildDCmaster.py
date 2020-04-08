@@ -222,7 +222,7 @@ for i in range(1,n_node+1):
 		name1 =  name_gen(n_node,i-1)
 		links = [name1]
 	entrypoint=["sh", "-c",tmp_str]
-	network = {"tendermintnet1":{"aliases":["tt"+shard_name+"node"+str(i)]}}
+	network = {"tendermintnet1":{"aliases":["TT"+shard_name+"Node"+str(i)]}}
 	#logging = {"driver":"fluentd","options":{"fluentd-address":"10.42.53.118:24224"}}
 	tmn = tm_node(name,volumes,environment,entrypoint,network,tty,links,id1)
 	node[name] = tmn

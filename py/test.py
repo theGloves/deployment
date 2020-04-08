@@ -7,8 +7,9 @@ T = sys.argv[3]
 rate = sys.argv[5]#rate
 cmd_set =""
 if shard_count ==0:
-	cmd ="sudo docker exec -i 4e5570ee8622 bash -c \"cd dist;./tm-bench_noshard -rate "+rate+" -r "+r+" -T "+T+" TTANode1.test:26657\""
-	print cmd
+	
+    cmd ="sudo docker exec -i 4e5570ee8622 bash -c \"cd dist;./tm-bench -rate "+rate+" -r "+r+" -T "+T+" TTANode1.test:26657\""
+    print cmd
 else:
 	Send_shard = "" #要发往哪些分片
 	for i in range(1,shard_count+1):
