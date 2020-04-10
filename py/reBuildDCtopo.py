@@ -66,7 +66,7 @@ if (shard_name=='A'):
 persisitent_peers=[]
 for i in range(1,n_node+1):
 	#port = 26656 + (i-1)*10000
-	tmp_str = node_id[i-1]+"@TT"+shard_name+"Node"+str(i)+":"+str(26656)
+	tmp_str = node_id[i-1]+"@Topo"+shard_name+"Node"+str(i)+":"+str(26656)
 	persisitent_peers.append(tmp_str)
 def knowm(n):#求m值
     m = math.ceil(pow(n,1/3))

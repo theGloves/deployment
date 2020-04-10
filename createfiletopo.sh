@@ -1,7 +1,7 @@
 #!/bin/bash
 node_cnt=$1
 workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
-ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
+ted_dir=$(echo $(cat config/config.json | jq ".topopwd")|sed 's/\"//g')
 shard=("A" "B" "C" "D" "E" "F" "G" "H" "I" "J" "K" "L" "M" "N" "O" "P" "Q" "R" "S" "T")
 file_num=$2
 cd $workdir
