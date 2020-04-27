@@ -7,7 +7,7 @@ services:
     tty: true
     volumes: ['/home/centos/NFS500/networktopo/TopoANode1/config:/tendermint/config']
     environment: [TASKID=A]
-    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=f4b46deae5cb79fb130c017f836e4d822d6c59ab@TopoANode3:26656,498391d9a85b066e34b3ac7987e3991029680d8c@TopoANode2:26656
+    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=960f4ef4771f49cadabe73c042b7862f31f90a3b@TopoANode3:26656,238f246248f82ba0c48e4b5f9acd5aaad79c5199@TopoANode2:26656
         --moniker=`hostname` --proxy_app=persistent_kvstore']
     networks:
       tendermintnet1:
@@ -19,7 +19,7 @@ services:
     tty: true
     volumes: ['/home/centos/NFS500/networktopo/TopoANode2/config:/tendermint/config']
     environment: [TASKID=A]
-    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=fa4a0a27e8a1655060e955252cfe1bb1d48bfcf3@TopoANode1:26656,44431a88f2f3e79e0a744bc077136773b9fd3843@TopoANode4:26656
+    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=a394808c5812c27cb05e165db5ef3544077757dd@TopoANode1:26656,310cdccbfdcb97179af92fb658ac23bbcdc910b3@TopoANode4:26656
         --moniker=`hostname` --proxy_app=persistent_kvstore']
     networks:
       tendermintnet1:
@@ -31,7 +31,7 @@ services:
     tty: true
     volumes: ['/home/centos/NFS500/networktopo/TopoANode3/config:/tendermint/config']
     environment: [TASKID=A]
-    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=fa4a0a27e8a1655060e955252cfe1bb1d48bfcf3@TopoANode1:26656,44431a88f2f3e79e0a744bc077136773b9fd3843@TopoANode4:26656
+    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=a394808c5812c27cb05e165db5ef3544077757dd@TopoANode1:26656,310cdccbfdcb97179af92fb658ac23bbcdc910b3@TopoANode4:26656
         --moniker=`hostname` --proxy_app=persistent_kvstore']
     networks:
       tendermintnet1:
@@ -43,7 +43,7 @@ services:
     tty: true
     volumes: ['/home/centos/NFS500/networktopo/TopoANode4/config:/tendermint/config']
     environment: [TASKID=A]
-    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=f4b46deae5cb79fb130c017f836e4d822d6c59ab@TopoANode3:26656,498391d9a85b066e34b3ac7987e3991029680d8c@TopoANode2:26656
+    entrypoint: [sh, -c, 'tendermint node --p2p.persistent_peers=960f4ef4771f49cadabe73c042b7862f31f90a3b@TopoANode3:26656,238f246248f82ba0c48e4b5f9acd5aaad79c5199@TopoANode2:26656
         --moniker=`hostname` --proxy_app=persistent_kvstore']
     networks:
       tendermintnet1:

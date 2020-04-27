@@ -10,11 +10,11 @@ for line in open("sum.log","r"):
 	sum = sum+a
 	count = count+1
 if shard_count == 0:
-	print sum 
+	print (sum)
 else:
 	if n > 10000:
-		print sum/count
+		print (sum/count)
 	else:
-		print (sum*n)/(n+2)
+		print( (sum*n)/(n+2))
 
 
