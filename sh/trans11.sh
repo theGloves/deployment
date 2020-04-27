@@ -10,21 +10,3 @@ echo "send done"
 ssh -i $workdir/key/ruc_500_new  centos@10.77.70.135  "cd /home/centos/$2;sudo docker load < tendermint.tar;sudo docker tag tendermint:latest 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker push 10.77.70.142:5000/tenderminttopo:v0.4"
 
 echo "load done"	
-
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.136 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.137 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.138 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.139 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.140 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.141 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.163 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.164 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.165 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.166 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.167 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.168 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.169 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-ssh -i $workdir/key/ruc_500_new  centos@10.77.70.170 "sudo docker rmi 10.77.70.142:5000/tenderminttopo:v0.4;sudo docker pull 10.77.70.142:5000/tenderminttopo:v0.4"&
-wait
-#启动docker镜像'ssh -i $workdir/key/id_rsa_768 centos@10.77.50.22 -p 10006
-echo -e "loading done: $SECONDS seconds"

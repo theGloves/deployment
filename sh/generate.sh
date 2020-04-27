@@ -7,10 +7,10 @@ make install
 echo "finish generate makefile"
 cd DOCKER
 cp $ted_bin/tendermint tendermint
-docker build -t tendermint .
+docker build -t tendermint1 .
 echo "finish generate docker"
-docker save -o tendermint.tar tendermint 
+docker save -o tendermint.tar tendermint1
 echo "finish save docker"
-#docker rmi tendermint
+docker rmi tendermint1
 echo "finish move docker"
 

@@ -9,7 +9,7 @@ cmd_set =""
 if shard_count ==0:
 	
     cmd ="sudo docker exec -i 4e5570ee8622 bash -c \"cd dist;./tm-bench -rate "+rate+" -r "+r+" -T "+T+" TTANode1.test:26657\""
-    print cmd
+    print(cmd)
 else:
 	Send_shard = "" #要发往哪些分片
 	for i in range(1,shard_count+1):
@@ -34,4 +34,4 @@ else:
 				flag =1
 			else:
 				cmd_set =cmd_set+","+shard_node
-	print cmd_set
+	print(cmd_set)
