@@ -37,8 +37,9 @@ class tm_node(object):
 		d['environment'] = self.environment 
 		d['entrypoint']=self.entrypoint
 		d['networks']=self.network
-		#if self.id!=1:
-			#d['links']=self.links
+        # 开启依赖启动
+		if self.id!=1:
+			d['links']=self.links
 		#d['logging']=self.logging
 		return d 
 dump_anydict_as_map(tm_node) 
@@ -147,7 +148,8 @@ def genname_surround(N,n,list):
             str = str+persisitent_peers[list[i]]+","
         else:
             str = str+persisitent_peers[list[i]]+","
-    str = str[:-1] + " --moniker=`hostname` --proxy_app=persistent_kvstore"
+    #不允许空区块
+    str = str[:-1] + " --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"
     return str
 def tmp_ep(N,n):
     nei_list = name_surround(N, n)
@@ -160,7 +162,7 @@ def tmp_endtrypoint(num,n_node):
 		if i!=num-1:
 
 			str = str + persisitent_peers[i]+","
-	str = str[:-1] +" --moniker=`hostname` --proxy_app=persistent_kvstore "
+	str = str[:-1] +" --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"
 	
 	return str
 def gen_nx_graph(N):
@@ -177,7 +179,7 @@ def name_gen(N,n):
     g = gen_nx_graph(N)
     p = nx.shortest_path(g, source=n, target=0)
     target = p[1]
-    str1 = "tt"+shard_name+"node"+str(target+1)
+    str1 = "TT"+shard_name+"Node"+str(target+1)
     return str1
 def name_gen1(N,n):
     g = gen_nx_graph(N)
@@ -221,6 +223,8 @@ for i in range(1,n_node+1):
 	if i != 1:
 		name1 =  name_gen(n_node,i-1)
 		links = [name1]
+    # 不允许空区块
+    
 	entrypoint=["sh", "-c",tmp_str]
 	network = {"tendermintnet1":{"aliases":["TT"+shard_name+"Node"+str(i)]}}
 	#logging = {"driver":"fluentd","options":{"fluentd-address":"10.42.53.118:24224"}}

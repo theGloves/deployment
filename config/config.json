@@ -1,6 +1,6 @@
 {
-    "projectpwd":"/home/centos/go/src/github.com/shardingBC",
+    "projectpwd":"/home/centos/go/src/github.com/tendermint/tendermint",
     "topopwd":"/home/centos/go/src/github.com/reconfiguration",
-    "projectbin":"/home/centos/go/bin",
+    "projectbin":"/home/centos/go/bin ",
     "depolymentpwd":"/home/centos/go/src/github.com/deployment"
 }
