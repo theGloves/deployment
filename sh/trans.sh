@@ -19,9 +19,9 @@ ssh -i $workdir/key/ruc_500_new  centos@10.77.70.139 "sudo docker rmi 10.77.70.1
 ssh -i $workdir/key/ruc_500_new  centos@10.77.70.140 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
 #ssh -i $workdir/key/ruc_500_new  centos@10.77.70.141 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
 
-# ssh -i $workdir/key/ruc_500_new  centos@10.77.70.163 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
-# ssh -i $workdir/key/ruc_500_new  centos@10.77.70.164 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
-# ssh -i $workdir/key/ruc_500_new  centos@10.77.70.165 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
+ssh -i $workdir/key/ruc_500_new  centos@10.77.70.163 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
+ssh -i $workdir/key/ruc_500_new  centos@10.77.70.164 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
+ssh -i $workdir/key/ruc_500_new  centos@10.77.70.165 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
 # ssh -i $workdir/key/ruc_500_new  centos@10.77.70.166 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
 # ssh -i $workdir/key/ruc_500_new  centos@10.77.70.167 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
 # ssh -i $workdir/key/ruc_500_new  centos@10.77.70.168 "sudo docker rmi 10.77.70.142:5000/tendermint:v0.4;sudo docker pull 10.77.70.142:5000/tendermint:v0.4"&
