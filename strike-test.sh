@@ -1,0 +1,2 @@
+workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
+ssh -i $workdir/key/ruc_500_new centos@10.77.70.142 "sudo docker exec -i 79a2c8eb2263 bash -c \"cd dist;./strike TTBNode1.test:26657 relay 80\""

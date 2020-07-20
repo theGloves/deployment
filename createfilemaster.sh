@@ -12,14 +12,13 @@ for (( j = 1; j <= $file_num; j++ ))
 do
 	
 		count=$(($j-1))
-		tmp=${shard[$count]} 
-		echo $tmp
-		./sh/init_data2.sh $node_cnt $count $file_num $tmp $j
+		echo $count
+		./sh/init_data2.sh $node_cnt $count $file_num $count $j
 		mkdir -p node${j}
 		chmod 777 node${j}
 		for (( i = 1; i <= $node_cnt; i++ )); do
-		    mv node${i}_data TT${tmp}Node${i}
-			cp TT${tmp}Node${i}/data/priv_validator_state.json TT${tmp}Node${i}/config/priv_validator_state.json 
+		    mv node${i}_data ${count}S${i}
+			cp ${count}S${i}/data/priv_validator_state.json ${count}S${i}/config/priv_validator_state.json 
 		done
 		cat docker-compose.yaml >> test.yaml
 done
@@ -36,7 +35,7 @@ do
 	tmp=${shard[$count]} 
 	for (( i = 1; i <= $node_cnt; i++ )); 
 	do
-		mv  $workdir/TT${tmp}Node${i} $workdir/network
+		mv  $workdir/${count}S${i} $workdir/network
 	done 
 
 done
