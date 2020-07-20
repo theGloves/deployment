@@ -66,15 +66,15 @@ Node_str=""
 		echo $(cat $default_genesis | jq ".validators |= .+ $(cat node${i}_data/config/genesis.json | jq '.validators')") > $default_genesis
 	    fi
 
-        #echo "TT${shard_name}Node$i $node_id"$(cat $default_genesis | jq ".chain_id") >> $workdir/topogensis.json
+        #echo "${shard_name}_$i $node_id"$(cat $default_genesis | jq ".chain_id") >> $workdir/topogensis.json
         nodekey="./node${i}_data/config/node_key.json"
         priv_validator_key="./node${i}_data/config/priv_validator_key.json"
-	    echo $(cat $default_genesis | jq ".validators[$i-1].name = \"TT${shard_name}Node$i\" ") > $default_genesis
+	    echo $(cat $default_genesis | jq ".validators[$i-1].name = \"${shard_name}S$i\" ") > $default_genesis
         
         if [[ ${i} = $node_cnt ]];then
              echo "{
                 \"ShardName\":\"$(($shard_now-1))\",
-                \"NodeName\":\"TT${shard_name}Node$i\",
+                \"NodeName\":\"${shard_name}S$i\",
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
@@ -83,7 +83,7 @@ Node_str=""
         elif [[ ${i} = 1 ]];then
              echo "[{
                 \"ShardName\":\"$(($shard_now-1))\",
-                \"NodeName\":\"TT${shard_name}Node$i\",
+                \"NodeName\":\"${shard_name}S$i\",
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
@@ -91,7 +91,7 @@ Node_str=""
         else 
             echo "{
                 \"ShardName\":\"$(($shard_now-1))\",
-                \"NodeName\":\"TT${shard_name}Node$i\",
+                \"NodeName\":\"${shard_name}S$i\",
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
@@ -147,9 +147,9 @@ for (( i = 1; i <= $node_cnt; i++ )); do
     echo "##### etcdConfig configuration options #####">> ./node${i}_data/config/config.toml
     echo "[etcd]">> ./node${i}_data/config/config.toml
     echo "#etcdname" >> ./node${i}_data/config/config.toml
-	echo "etcdname = \"TT${shard_name}Node$i\"" >> ./node${i}_data/config/config.toml
+	echo "etcdname = \"${shard_name}_$i\"" >> ./node${i}_data/config/config.toml
     echo "#etcddir" >> ./node${i}_data/config/config.toml
-	echo "etcddir = \"TT${shard_name}Node$i\"" >> ./node${i}_data/config/config.toml
+	echo "etcddir = \"${shard_name}_$i\"" >> ./node${i}_data/config/config.toml
     str1="\""
     for (( j = 1; j <= $node_cnt; j++ )); do
         str="TT${shard_name}Node$j=http://TT${shard_name}Node$j:2380"

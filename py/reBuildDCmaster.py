@@ -51,7 +51,7 @@ n_node = int(sys.argv[1])
 #得到所有node的id，传入的是一个string字符串，以,隔开
 str_node_id = sys.argv[2]
 shard = sys.argv[3]
-shard_name = chr(int(shard)+65)
+#shard_name = chr(int(shard)+65)
 shard_count = sys.argv[4]
 node_id = str_node_id.split(",")
 
@@ -60,14 +60,14 @@ filename = "docker-compose.yaml"
 f = open(filename, "w")
 #设置vesrion
 
-if (shard_name=='A'):
+if (shard=='0'):
 	version = {'version':2}
 	yaml.dump(version, f)
 #生成persisitent_peers
 persisitent_peers=[]
 for i in range(1,n_node+1):
 	#port = 26656 + (i-1)*10000
-	tmp_str = node_id[i-1]+"@TT"+shard_name+"Node"+str(i)+":"+str(26656)
+	tmp_str = node_id[i-1]+"@"+shard+"S"+str(i)+":"+str(26656)
 	persisitent_peers.append(tmp_str)
 def knowm(n):#求m值
     m = math.ceil(pow(n,1/3))
@@ -149,7 +149,7 @@ def genname_surround(N,n,list):
         else:
             str = str+persisitent_peers[list[i]]+","
     #不允许空区块
-    str = str[:-1] + " --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"
+    str = str[:-1] + " --moniker=`hostname` --proxy_app=persistent_kvstore"#"
     return str
 def tmp_ep(N,n):
     nei_list = name_surround(N, n)
@@ -162,7 +162,7 @@ def tmp_endtrypoint(num,n_node):
 		if i!=num-1:
 
 			str = str + persisitent_peers[i]+","
-	str = str[:-1] +" --moniker=`hostname` --proxy_app=persistent_kvstore --consensus.create_empty_blocks=false"
+	str = str[:-1] +" --moniker=`hostname` --proxy_app=persistent_kvstore "#--consensus.create_empty_blocks=false"
 	
 	return str
 def gen_nx_graph(N):
@@ -179,7 +179,7 @@ def name_gen(N,n):
     g = gen_nx_graph(N)
     p = nx.shortest_path(g, source=n, target=0)
     target = p[1]
-    str1 = "TT"+shard_name+"Node"+str(target+1)
+    str1 = shard+"S"+str(target+1)
     return str1
 def name_gen1(N,n):
     g = gen_nx_graph(N)
@@ -208,7 +208,7 @@ node = {}
 # 	# str = str1 +" --moniker=`hostname` --proxy_app=persistent_kvstore "
 # 	return str
 for i in range(1,n_node+1):
-	name = "TT"+shard_name+"Node"+str(i)
+	name = shard+"S"+str(i)
 
 	volumes=["/home/centos/NFS500/network/"+name+"/config:/tendermint/config"]
 	# print (n_node,i-1)
@@ -216,7 +216,7 @@ for i in range(1,n_node+1):
 	nei_list = name_surround(n_node,i-1)
 
 	# tmp_str = tmp_endtrypoint(i,n_node)
-	environment=["TASKID="+shard_name]
+	environment=["TASKID="+shard,"TASKINDEX="+str(i)]
 	tty = "true"
 	links=[""]
 	id1 = i
@@ -226,7 +226,7 @@ for i in range(1,n_node+1):
     # 不允许空区块
     
 	entrypoint=["sh", "-c",tmp_str]
-	network = {"tendermintnet1":{"aliases":["TT"+shard_name+"Node"+str(i)]}}
+	network = {"tendermintnet1":{"aliases":[shard+"S"+str(i)]}}
 	#logging = {"driver":"fluentd","options":{"fluentd-address":"10.42.53.118:24224"}}
 	tmn = tm_node(name,volumes,environment,entrypoint,network,tty,links,id1)
 	node[name] = tmn
