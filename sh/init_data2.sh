@@ -44,13 +44,14 @@ if [[ $shard_now = 1 ]];then
     echo "[" >> $workdir/topogensis.json
 fi
 Node_str=""
+
 	for (( i = 1; i <= $node_cnt; i++ )); do
 	    if ! is_osx; then
 		mkdir -p node${i}_data
 		chmod 777 node${i}_data
 	    fi
-
-	    docker run --rm -v `pwd`/node${i}_data:/tendermint $tendermint_img init
+        f1=$(($(($node_cnt/3))*2))
+	    docker run -e TASKID=$(($shard_now-1)) -e TASKINDEX=$i -e THRESHOLD=$f1 --rm -v `pwd`/node${i}_data:/tendermint $tendermint_img init
 
 	    if ! is_osx; then
 		sudo chmod -R 777 node${i}_data
@@ -107,7 +108,7 @@ Node_str=${Node_str%?}
 python3 py/reBuildDCmaster.py $node_cnt $Node_str $shard $shard_count
 
 #将genesis.json统一拷贝
-echo $(cat $default_genesis | jq ".validators[0].power = \"1000\" ") > $default_genesis
+# echo $(cat $default_genesis | jq ".validators[0].power = \"1000\" ") > $default_genesis
 if [[ $shard_count = $shard_now ]];then
     echo "]" >> $workdir/topogensis.json
     if [[ $shard_now = 2 ]];then
@@ -136,6 +137,7 @@ for (( i = 1; i <= $node_cnt; i++ )); do
     $SED -i "s/dial_timeout = \"3s\"/dial_timeout = \"10s\"/g" ./node${i}_data/config/config.toml
     $SED -i "s#priv_validator_state_file = \"data/priv_validator_state.json\"#priv_validator_state_file = \"config/priv_validator_state.json\"#g" ./node${i}_data/config/config.toml
     $SED -i "s/addr_book_strict = true/addr_book_strict = false/g" ./node${i}_data/config/config.toml
+    $SED -i "s/max_txs_bytes = 1073741824/max_txs_bytes = 40737418240/g" ./node${i}_data/config/config.toml
     echo "##### reconfiguration configuration options #####" >> ./node${i}_data/config/config.toml
     echo "[reconfiguration]" >> ./node${i}_data/config/config.toml
     echo "#Shardcount" >> ./node${i}_data/config/config.toml

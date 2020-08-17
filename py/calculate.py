@@ -15,6 +15,6 @@ else:
 	if n > 10000:
 		print (sum/count)
 	else:
-		print( sum/(2*(1/n)+1))
+		print( sum/((1/n)+1))
 
 
