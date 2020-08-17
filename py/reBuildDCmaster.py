@@ -16,7 +16,7 @@ def _represent_dictorder(self, data):
 #定义tm_node类
 class tm_node(object): 
 	def __init__(self, name,volumes,environment,entrypoint,network,tty,links,id1): 
-		self.image ='10.77.70.142:5000/tendermint:v0.4'
+		self.image ='tendermint:latest'
 		self.container_name=name
 		self.hostname = name		
 		self.tty=tty
@@ -175,6 +175,10 @@ def gen_nx_graph(N):
             # print (nei_list[j])
             g.add_edge(i,nei_list[j])
     return g
+def get_threshold(n):
+	divide = int(n / 3)
+	thre = divide * 2
+	return str(thre)
 def name_gen(N,n):
     g = gen_nx_graph(N)
     p = nx.shortest_path(g, source=n, target=0)
@@ -210,13 +214,13 @@ node = {}
 for i in range(1,n_node+1):
 	name = shard+"S"+str(i)
 
-	volumes=["/home/centos/NFS500/network/"+name+"/config:/tendermint/config"]
+	volumes=["/root/NFS500/network/"+name+"/config:/tendermint/config"]
 	# print (n_node,i-1)
 	tmp_str = tmp_ep(n_node,i-1)
 	nei_list = name_surround(n_node,i-1)
 
 	# tmp_str = tmp_endtrypoint(i,n_node)
-	environment=["TASKID="+shard,"TASKINDEX="+str(i)]
+	environment=["TASKID="+shard,"TASKINDEX="+str(i),"THRESHOLD="+get_threshold(n_node+1)]
 	tty = "true"
 	links=[""]
 	id1 = i
