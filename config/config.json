@@ -1,6 +1,9 @@
 {
-    "projectpwd":"/root/go/src/github.com/tendermint",
-    "topopwd":"/root/go/src/github.com/reconfiguration",
-    "projectbin":"/root/go/bin",
-    "depolymentpwd":"/root/go/src/github.com/deployment"
+    "projectpwd":"/home/centos/go/src/github.com/tendermint/tendermint",
+    "topopwd":"/home/centos/go/src/github.com/reconfiguration",
+    "projectbin":"/home/centos/go/bin",
+    "depolymentpwd":"/home/centos/go/src/github.com/deployment",
+    "Home":"/home/centos",
+    "Data":"/home/centos/NFS500",
+    "containerid":"ae9ff934b10b"
 }

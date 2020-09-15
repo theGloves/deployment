@@ -55,6 +55,6 @@ mv topogensis.json $workdir/network
 python3 py/info.py
 chmod 777 $workdir/network/shard.json
 chmod 777 $workdir/network/data.json
-chmod 777 $workdir/network/
+chmod 777 -R $workdir/network/
 mv /$workdir/network/shard.json $workdir/config/
 mv $workdir/network/data.json  $workdir/config/

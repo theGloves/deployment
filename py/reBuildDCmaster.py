@@ -16,7 +16,7 @@ def _represent_dictorder(self, data):
 #定义tm_node类
 class tm_node(object): 
 	def __init__(self, name,volumes,environment,entrypoint,network,tty,links,id1): 
-		self.image ='tendermint:latest'
+		self.image ='10.77.70.142:5000/tendermint:v0.4'
 		self.container_name=name
 		self.hostname = name		
 		self.tty=tty
@@ -213,8 +213,7 @@ node = {}
 # 	return str
 for i in range(1,n_node+1):
 	name = shard+"S"+str(i)
-
-	volumes=["/root/NFS500/network/"+name+"/config:/tendermint/config"]
+	volumes=["/home/centos/NFS500/network/"+name+"/config:/tendermint/config"]
 	# print (n_node,i-1)
 	tmp_str = tmp_ep(n_node,i-1)
 	nei_list = name_surround(n_node,i-1)

@@ -1,7 +1,7 @@
 workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
 ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
 ted_bin=$(echo $(cat config/config.json | jq ".projectbin")|sed 's/\"//g')
-
+container_id=$(echo $(cat config/config.json | jq ".containerid")|sed 's/\"//g')
 cd $workdir
 
 sudo rm -rf sum.log
