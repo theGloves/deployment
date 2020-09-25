@@ -1,5 +1,5 @@
 node_cnt=$1
-tendermint_img="tendermint:latest"
+tendermint_img="registry-vpc.cn-beijing.aliyuncs.com/ruc500/shardingbc:latest"
 shard=$2
 shard_count=$3
 shard_name=$4

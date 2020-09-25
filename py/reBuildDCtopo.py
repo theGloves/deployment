@@ -16,7 +16,7 @@ def _represent_dictorder(self, data):
 #定义tm_node类
 class tm_node(object): 
 	def __init__(self, name,volumes,environment,entrypoint,network,tty,links,id1): 
-		self.image ='10.77.70.142:5000/tenderminttopo:v0.4'
+		self.image ='registry-vpc.cn-beijing.aliyuncs.com/ruc500/reconfiguration:latest'
 		self.container_name=name
 		self.hostname = name		
 		self.tty=tty
@@ -208,7 +208,7 @@ node = {}
 for i in range(1,n_node+1):
 	name = "Topo"+shard_name+"Node"+str(i)
 
-	volumes=["/home/centos/NFS500/networktopo/"+name+"/config:/tendermint/config"]
+	volumes=["/root/NFS500/networktopo/"+name+"/config:/tendermint/config"]
 	# print (n_node,i-1)
 	tmp_str = tmp_ep(n_node,i-1)
 	nei_list = name_surround(n_node,i-1)
@@ -222,7 +222,7 @@ for i in range(1,n_node+1):
 		name1 =  name_gen(n_node,i-1)
 		links = [name1]
 	entrypoint=["sh", "-c",tmp_str]
-	network = {"tendermintnet1":{"aliases":["tt"+shard_name+"node"+str(i)]}}
+	network = {"tendermintnet1":{"aliases":["Topo"+shard_name+"node"+str(i)]}}
 	#logging = {"driver":"fluentd","options":{"fluentd-address":"10.42.53.118:24224"}}
 	tmn = tm_node(name,volumes,environment,entrypoint,network,tty,links,id1)
 	node[name] = tmn

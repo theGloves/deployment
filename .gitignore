@@ -1,5 +1,6 @@
 
-network*
+network/*
+networktopo/*
 *.tar
 .DS_Store
 node*/
@@ -7,3 +8,6 @@ shard.json
 sum.log
 .gitignore
 key/*
+.rancher
+*S*/
+batch.log
