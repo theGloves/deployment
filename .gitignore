@@ -2,7 +2,8 @@
 network*
 *.tar
 .DS_Store
-node1
-node2
+node*/
 shard.json
 sum.log
+.gitignore
+key/*
