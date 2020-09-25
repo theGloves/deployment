@@ -10,7 +10,7 @@ TEST_DURATION=60              #d
 TEST_INTERVAL=60              #i
 IS_DRAW=0                     #D
 CROSS_RATE=2                  #r
-NO_RECONFIG=0                 #N
+NO_RECONFIG=0                 #R
 TEST_SCRIPT="tm-simulator.sh" #E 使用eth数据
 
 main() {
@@ -61,7 +61,7 @@ while getopts ":n:s:t:d:i:Dr:NE" opt; do
   t)
     TX_NUM=$OPTARG
     ;;
-  t)
+  d)
     TEST_DURATION=$OPTARG
     ;;
   i)
