@@ -42,8 +42,7 @@ done
 
 chmod 777 test.yaml
 mv test.yaml networktopo/docker-compose.yaml
-cd $ted_dir
-rm -rf networktopo
+
 cd $workdir
 cp -r networktopo $ted_dir/
 chmod -R 777 $ted_dir/networktopo

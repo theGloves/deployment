@@ -15,8 +15,8 @@ def _represent_dictorder(self, data):
     return self.represent_mapping('tag:yaml.org,2002:map', data.items()) 
 #定义tm_node类
 class tm_node(object): 
-	def __init__(self, name,volumes,environment,entrypoint,network,tty,links,id1): 
-		self.image ='10.77.70.142:5000/tendermint:v0.4'
+	def __init__(self, name,volumes,environment,entrypoint,network,tty,links,id1,logging): 
+		self.image ='registry-vpc.cn-beijing.aliyuncs.com/ruc500/shardingbc:latest'
 		self.container_name=name
 		self.hostname = name		
 		self.tty=tty
@@ -26,7 +26,7 @@ class tm_node(object):
 		self.network=network
 		self.links = links
 		self.id = id1
-		#self.logging = logging
+		self.logging = logging
 	def __getstate__(self): 
 		d = OrderedDict()
 		d['image']=self.image
@@ -37,10 +37,11 @@ class tm_node(object):
 		d['environment'] = self.environment 
 		d['entrypoint']=self.entrypoint
 		d['networks']=self.network
+
         # 开启依赖启动
 		if self.id!=1:
 			d['links']=self.links
-		#d['logging']=self.logging
+		d['logging']=self.logging
 		return d 
 dump_anydict_as_map(tm_node) 
 
@@ -213,7 +214,7 @@ node = {}
 # 	return str
 for i in range(1,n_node+1):
 	name = shard+"S"+str(i)
-	volumes=["/home/centos/NFS500/network/"+name+"/config:/tendermint/config"]
+	volumes=["/root/NFS500/network/"+name+"/config:/tendermint/config"]
 	# print (n_node,i-1)
 	tmp_str = tmp_ep(n_node,i-1)
 	nei_list = name_surround(n_node,i-1)
@@ -230,8 +231,9 @@ for i in range(1,n_node+1):
     
 	entrypoint=["sh", "-c",tmp_str]
 	network = {"tendermintnet1":{"aliases":[shard+"S"+str(i)]}}
-	#logging = {"driver":"fluentd","options":{"fluentd-address":"10.42.53.118:24224"}}
-	tmn = tm_node(name,volumes,environment,entrypoint,network,tty,links,id1)
+
+	logging = {"driver":"fluentd","options":{"fluentd-address":"192.168.0.190:24224","tag":"docker.origin"}}
+	tmn = tm_node(name,volumes,environment,entrypoint,network,tty,links,id1,logging)
 	node[name] = tmn
 	
 

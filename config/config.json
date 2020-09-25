@@ -1,9 +1,10 @@
 {
-    "projectpwd":"/home/centos/go/src/github.com/tendermint/tendermint",
-    "topopwd":"/home/centos/go/src/github.com/reconfiguration",
-    "projectbin":"/home/centos/go/bin",
-    "depolymentpwd":"/home/centos/go/src/github.com/deployment",
-    "Home":"/home/centos",
-    "Data":"/home/centos/NFS500",
-    "containerid":"ae9ff934b10b"
+    "projectpwd":"/root/gopath/src/github.com/tendermint/shardingBC_old",
+    "benchpwd":"/root/gopath/src/github.com/tendermint/shardingBC_bench",
+    "topopwd":"/root/gopath/src/github.com/reconfiguration",
+    "projectbin":"/root/gopath/bin",
+    "depolymentpwd":"/root/gopath/src/github.com/deployment",
+    "Home":"/root",
+    "Data":"/root/NFS500",
+    "containerid":"84efd3efd923ad7a2ca40dec7ad38e0b7b8587189c6ffbf23be4f74fdfc37546"
 }
