@@ -1,10 +1,12 @@
 # coding:utf-8
 import sys
-
+import random
+import time
 shard_count = int(sys.argv[1])  # 分片的个数
 
 r = sys.argv[2]
 T = sys.argv[3]
+send_count = sys.argv[4]
 rate = sys.argv[5]  # rate
 shard="0"
 if shard_count == 1:
@@ -25,10 +27,12 @@ else:
     shard_node = ""
     for i in range(0, shard_count ):
         shard_name = str(i)
+        time.sleep(0.01)
         if i==0:
-            shard_node = "0S1.tendermint:26657"
+            shard_node = "0S"+str(random.randint(1,int(send_count)))+".tendermint:26657"
             continue
-        shard_node = shard_node+","+shard_name + "S1.tendermint:26657"
+
+        shard_node = shard_node+","+shard_name + "S"+str(random.randint(1,int(send_count)))+".tendermint:26657"
     
     cmd = "cd dist;./tm-bench -rate " + rate + " -r " + r + " -T " + T +" -as " + Send_shard + " " + shard_node
         # if i == (shard_count-1):

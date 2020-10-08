@@ -4,6 +4,7 @@ import sys
 import math
 from collections import OrderedDict
 import networkx as nx
+
 #使dic可以按顺序写入yaml文件中
 def dump_anydict_as_map(anydict): 
   yaml.add_representer(anydict, _represent_dictorder) 
@@ -17,6 +18,7 @@ def _represent_dictorder(self, data):
 class tm_node(object): 
 	def __init__(self, name,volumes,environment,entrypoint,network,tty,links,id1,logging): 
 		self.image ='registry-vpc.cn-beijing.aliyuncs.com/ruc500/shardingbc:latest'
+		# self.image ='registry-vpc.cn-beijing.aliyuncs.com/ruc500/tendermint:0.31' # origin tendermint 
 		self.container_name=name
 		self.hostname = name		
 		self.tty=tty
@@ -41,7 +43,9 @@ class tm_node(object):
         # 开启依赖启动
 		if self.id!=1:
 			d['links']=self.links
-		d['logging']=self.logging
+		#d['logging']=self.logging
+        # int(int(shard)/num)+1)  该公式表示每num个分片在一台服务器上
+		# d['labels']= {"io.rancher.scheduler.affinity:host_label": "label={}".format(int(int(shard)/1)+1)}
 		return d 
 dump_anydict_as_map(tm_node) 
 
@@ -220,7 +224,7 @@ for i in range(1,n_node+1):
 	nei_list = name_surround(n_node,i-1)
 
 	# tmp_str = tmp_endtrypoint(i,n_node)
-	environment=["TASKID="+shard,"TASKINDEX="+str(i),"THRESHOLD="+get_threshold(n_node+1)]
+	environment=["TASKID="+shard,"TASKINDEX="+str(i),"THRESHOLD="+get_threshold(n_node+1),"Count="+str(n_node)]
 	tty = "true"
 	links=[""]
 	id1 = i

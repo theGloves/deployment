@@ -1,12 +1,13 @@
 import requests
 from json import dumps, loads
 from time import sleep
+from sys import argv
 
 # 在默认环境下操作stack
 env_id = '1a5'
+#stack_api = 'http://123.57.154.19:8080/v2-beta/projects/' + env_id + '/stacks/'
+
 stack_api = 'http://123.57.154.19:8080/v2-beta/projects/' + env_id + '/stacks/'
-
-
 def _get_attr(raw, attr):
     try:
         data = loads(raw)
@@ -80,6 +81,7 @@ def create_stack(name, yaml):
 
     if resp.status_code != 201:
         print("create stack {} failed.".format(name))
+        print(resp.content)
         return '', False
 
     # 提取新创建stack的id
@@ -144,4 +146,7 @@ def auto_deploy():
 
 
 if __name__ == "__main__":
-    auto_deploy()
+    if len(argv) > 1 and argv[1] == "clean":
+        cleanup()
+    else:
+        auto_deploy()
