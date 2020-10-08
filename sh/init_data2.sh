@@ -1,5 +1,6 @@
 node_cnt=$1
 tendermint_img="registry-vpc.cn-beijing.aliyuncs.com/ruc500/shardingbc:latest"
+# tendermint_img="registry-vpc.cn-beijing.aliyuncs.com/ruc500/tendermint:0.31"
 shard=$2
 shard_count=$3
 shard_name=$4
@@ -137,7 +138,7 @@ for (( i = 1; i <= $node_cnt; i++ )); do
     $SED -i "s/dial_timeout = \"3s\"/dial_timeout = \"10s\"/g" ./node${i}_data/config/config.toml
     $SED -i "s#priv_validator_state_file = \"data/priv_validator_state.json\"#priv_validator_state_file = \"config/priv_validator_state.json\"#g" ./node${i}_data/config/config.toml
     $SED -i "s/addr_book_strict = true/addr_book_strict = false/g" ./node${i}_data/config/config.toml
-    $SED -i "s/max_txs_bytes = 1073741824/max_txs_bytes = 40737418240/g" ./node${i}_data/config/config.toml
+    # $SED -i "s/max_txs_bytes = 1073741824/max_txs_bytes = 40737418240/g" ./node${i}_data/config/config.toml
     echo "##### reconfiguration configuration options #####" >> ./node${i}_data/config/config.toml
     echo "[reconfiguration]" >> ./node${i}_data/config/config.toml
     echo "#Shardcount" >> ./node${i}_data/config/config.toml

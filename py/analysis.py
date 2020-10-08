@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/pytho.5
 from json import loads
 from sys import argv
 from numpy import mean, min, max, var, median
@@ -56,7 +56,12 @@ def loadPhases(filename):
         for line in doc:
             # 以tab切分拿到json string
             origin_data = line.split("\t")[2]
-            jsondata = loads(origin_data)
+            jsondata = {}
+            try:
+                jsondata = loads(origin_data)
+            except exception:
+                print(origin_data)
+            
             tx_id = jsondata["tx_id"]
             phase = jsondata["index"]
             ptimes = jsondata["times"]
@@ -73,29 +78,48 @@ def loadPhases(filename):
 
 tx_index = [
     {
-        "name": "1mem",
-        "formula": [("phase21", "phase2")]
+        "name": "memSyncTX",
+        "formula": [("tPreCheckTX", "tPreCheck1TX")]
     },
     {
-        "name": "memCheck",
-        "formula": [("phase40", None)]
+        "name": "memWaitTX",
+        "formula": [("tReapMem1", "tInsideMemTX")]
     },
     {
-        "name": "memSync",
-        "formula": [("phase43", "phase42")]
+        "name": "memCheckCM",
+        "formula": [("tPostCheck", "tPreCheckCM")]
     },
     {
-        "name": "2mem",
-        "formula": [("phase41", "phase4")]
+        "name": "memSyncCM",
+        "formula": [("tPreCheckCM", "tPreCheck1CM")]
     },
     {
-        "name": "1cons",
-        "formula": [("phase3", "phase21")]
+        "name": "memWaitCM",
+        "formula": [("tReapMem1", "tInsideMemCM")]
     },
     {
-        "name": "2cons",
-        "formula": [("phase5", "phase41")]
+        "name": "memWaitCMDoneTX",
+        "formula": [("tReapMemDone1", "tInsideMemTX")]
     },
+    {
+        "name": "memWaitCMDoneCM",
+        "formula": [("tReapMemDone1", "tInsideMemCM")] #
+    },
+    {
+        "name": "periodCheck",
+        "formula": [("periodCheck", None)]
+    },
+    {
+        "name": "periodAddTX",
+        "formula": [("periodAddTX", None)]
+    },
+    {
+        "name": "periodAddCM",
+        "formula": [("periodAddCM", None)]
+    },
+
+
+    
     {
         "name": "package",
         "formula": [("cphase1", None)]
@@ -132,7 +156,8 @@ def analysisPhase(txmap):
                 # formula = ("phase21", "phase2")
                 v_avg = tx.sub(formula[0], formula[1])
                 # 大于1ms的时间在记录
-                if v_avg > 0.001:
+                # if v_avg > 0.001:
+                if v_avg > 0:
                     vals[i].append(v_avg)
 
     # 每个指标均输出最小值、平均值、最大值、方差值
@@ -142,7 +167,7 @@ def analysisPhase(txmap):
         if len(vals[i]) == 0:
             vals[i] = [0]
         name = tx_index[i]["name"]
-        print("{}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}\t{:.3f}".format(
+        print("{}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}\t{:.5f}".format(
             name, min(vals[i]), max(vals[i]), mean(vals[i]), median(vals[i]),
             var(vals[i])))
 
