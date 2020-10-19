@@ -35,7 +35,7 @@ do
 	count=$(($j-1))
 	for (( i = 1; i <= $node_cnt; i++ )); 
 	do
-		mv  $workdir/${count}S${i} $workdir/network
+		mv $workdir/${count}S${i} $workdir/network
 	done 
 
 done

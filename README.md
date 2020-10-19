@@ -87,3 +87,39 @@ pip3 install netwrokx
 
 注意：在doc文件夹中有doc文件可以查看具体如何操作。
 -
+
+# 编译
+- tendermint编译 & 推镜像  
+```bash
+make build
+```
+- 测试工具编译 & 推镜像
+  0 编译模拟数据的测试工具；1编译eth的测试工具
+```bash
+bash trans_tm-bench.sh <0/1>
+```
+
+# 测试脚本
+- 使用eth数据测试
+```bash
+   bash tm-test.sh <分片数> <tx/s> <持续时间> <片内节点数> <跨片比例>
+```
+- 使用模拟数据测试
+```bash
+bash tm-simulator.sh <分片数> <tx/s> <持续时间> <片内节点数> <跨片比例>
+```
+- 使用原生tendermint测试
+```bash
+bash tm-tendermint.sh <分片数> <tx/s> <持续时间> <片内节点数> <跨片比例>
+```
+
+
+# yaml模板参数
+- node_name： 节点名 （tt-1s1）
+- shard_name: 节点所属分片名 （-1）
+- image: 镜像名
+- peers： tendermint连接句柄
+- count： 片内节点总数 （3）
+- node_num: 该节点在片内编号 （0）
+- shard_num： 该分片编号 （-1）
+- thresholdd：聚合签名门限值 （1

@@ -1,12 +1,3 @@
-# 模板参数
-# node_name： 节点名 （tt0s1）
-# shard_name: 节点所属分片名 （0）
-# image: 镜像名
-# peers： tendermint连接句柄
-# count： 片内节点总数 （4）
-# node_num: 该节点在片内编号 （1）
-# shard_num： 该分片编号 （0）
-# thresholdd：聚合签名门限值 （2）
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -25,15 +16,15 @@ spec:
         app: shardingbc
         name: {node_name}
     spec:
-      affinity: # 指定主机
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: mylabel
-                operator: In
-                values:
-                - {shard_name}
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - {shard_name}
       containers:
       - name: {node_name}
         image: {image}
@@ -53,14 +44,14 @@ spec:
             value: "{node_num}"
           - name: THRESHOLD
             value: "{threshold}"
-        volumeMounts: # 卷挂载
+        volumeMounts:
           - mountPath: /tendermint/config
             name: vs{shard_num}{node_num}
-        # resources: # 资源限制
+        # resources:
         #   limits:
         #     cpu: "1"
         #     memory: 2Gi
-      volumes: #挂载宿主机路径
+      volumes:
         - hostPath:
             path: /home/centos/NFS500/network/{shard_num}S{node_num}/config
             type: ""
