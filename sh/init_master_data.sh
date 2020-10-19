@@ -52,13 +52,13 @@ Node_str=""
 		chmod 777 node${i}_data
 	    fi
         f1=$(($(($node_cnt/3))*2))
-	    docker run -e TASKID=$(($shard_now-1)) -e TASKINDEX=$i -e THRESHOLD=$f1 --rm -v `pwd`/node${i}_data:/tendermint $image init
+	    sudo docker run -e TASKID=$(($shard_now-1)) -e TASKINDEX=$i -e THRESHOLD=$f1 --rm -v `pwd`/node${i}_data:/tendermint $image init
 
 	    if ! is_osx; then
 		sudo chmod -R 777 node${i}_data
 	    fi
 
-	    node_id=$(docker run --rm -v `pwd`/node${i}_data:/tendermint $image show_node_id)
+	    node_id=$(sudo docker run --rm -v `pwd`/node${i}_data:/tendermint $image show_node_id)
 	    echo "Node$i ID: $node_id"
         #添加节点名字到json文件之中
         

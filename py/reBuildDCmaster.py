@@ -138,7 +138,7 @@ shard = sys.argv[3]
 shard_count = sys.argv[4]
 node_id = str_node_id.split(",")
 
-template_filename = "template.yaml"  # 读取模板文件
+template_filename = "config/k8s-template.yaml"  # 读取模板文件
 filename = "docker-compose.yaml"  # 输出文件名
 
 template = ""

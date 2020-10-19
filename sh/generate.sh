@@ -8,6 +8,6 @@ make build
 echo "finish generate makefile"
 cd DOCKER
 cp ../build/tendermint tendermint
-docker build -t "${image}" .
-docker push $image
+sudo docker build -t "${image}" .
+sudo docker push $image
 echo "finish generate docker"

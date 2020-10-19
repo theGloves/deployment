@@ -32,7 +32,7 @@ spec:
         command:
           - tendermint
           - node
-          - --p2p.persistent_peers=${peers}
+          - --p2p.persistent_peers={peers}
           - --moniker=`hostname`
           - --proxy_app=persistent_kvstore
         env:
@@ -65,7 +65,7 @@ metadata:
     name: {node_name}
 spec:
   selector:
-    name: {node_num}
+    name: {node_name}
   type:  ClusterIP
   ports:
   - name:  default
