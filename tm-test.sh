@@ -13,7 +13,7 @@ sudo docker exec -i $container_id bash -c "$cmd" >> sum.log
 echo "完成测试"
 
 
-tps=$(python3 py/calculate.py $1 $5)
+tps=$(python3 py/calculate_monitor.py $1 $5)
 total=$[$1*$2]
 shardtotal=$[$1*$4]
 echo $1 $shardtotal $total $tps  >> tps/tps.log

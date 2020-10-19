@@ -1,4 +1,3 @@
-
 build:
 	bash stage_quick_start.sh
 	
@@ -10,7 +9,7 @@ clean:
 # 快速部署应用
 quick:
 	python py/autorancher.py clean
-	bash sendmasterfile2.sh
+	bash sendmasterfile.sh
 	python py/autorancher.py
 
 test:

@@ -6,5 +6,6 @@
     "depolymentpwd":"/root/gopath/src/github.com/deployment",
     "Home":"/root",
     "Data":"/root/NFS500",
-	"containerid":"777fd3674c7c4cd2a70f3b5951013e3f3d419969cbfafd398e554557895fa974"
+    "containerid":"777fd3674c7c4cd2a70f3b5951013e3f3d419969cbfafd398e554557895fa974",
+    "image":"10.77.70.142:5000/shardingBC:latest"
 }

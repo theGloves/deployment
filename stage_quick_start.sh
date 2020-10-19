@@ -1,9 +1,8 @@
-workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
-ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
+# 编译
 ./sh/generate.sh 
 echo "generate docker.tar done"
-./sh/trans2.sh 8 lyh
+# 推镜像和配置文件
+./sh/trans_master.sh
 echo "trans tar to server done"
-# ./sendmasterfile2.sh 
+# ./sendmasterfile.sh 
 # echo "send newwork done"
-
