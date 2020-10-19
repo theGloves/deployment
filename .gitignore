@@ -8,5 +8,4 @@ sum.log
 .gitignore
 key/*
 .rancher
-*S*/
 batch.log
