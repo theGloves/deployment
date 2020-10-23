@@ -5,6 +5,7 @@ metadata:
   name: {node_name}
   labels:
     name: {node_name}
+    app: shardingbc
 spec:
   replicas: 1
   selector:
@@ -63,6 +64,7 @@ metadata:
   name:  {node_name}
   labels:
     name: {node_name}
+    app: shardingbc
 spec:
   selector:
     name: {node_name}
