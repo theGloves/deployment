@@ -26,8 +26,8 @@ main() {
         bash createfilemaster.sh ${node} ${shard} >/dev/null 2>&1
       fi
       bash sendmasterfile2.sh >/dev/null 2>&1
-	    curl -XPOST "http://127.0.0.1:9200/tendermint-20201007/_delete_by_query" -H 'Content-Type: application/json' -d'{  "query": {    "terms": {      "@log_name": ["tendermint.error","tendermint.tps","tendermint.latency"]    }  }}'
-      python py/autorancher.py
+	  curl -XPOST "http://127.0.0.1:9200/tendermint-20201007/_delete_by_query" -H 'Content-Type: application/json' -d'{  "query": {    "terms": {      "@log_name": ["tendermint.error","tendermint.tps","tendermint.latency"]    }  }}'
+	  ./bin/kubectl create -n tendermint -f network/docker-compose.yaml 
       sleep $TEST_INTERVAL
       for tx in $TX_NUM; do
         sleep $TEST_INTERVAL
@@ -49,12 +49,12 @@ main() {
         # 日志转储 后续分析
         # mkdir /opt/fluentd/data/${shard}_${node}_${tx}
         # mv /opt/fluentd/data/latency.* /opt/fluentd/data/${shard}_${node}_${tx}
-		    echo "========== ${shard} ${node} test done =========="
+		echo "========== ${shard} ${node} test done =========="
       done
     done
 
     # 删除部署的应用
-    python py/autorancher.py clean
+	./bin/kubectl delete -n tendermint services,deployments -l app-shardingbc
     sleep $TEST_INTERVAL #多睡会保证清楚干净
   done
 }

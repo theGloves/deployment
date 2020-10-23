@@ -24,7 +24,6 @@ do
 done
 
 rm -rf docker-compose.yaml
-cat config/net.yaml >> test.yaml
 
 mkdir $workdir/network
 sudo chmod 777 $workdir/network

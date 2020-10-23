@@ -4,4 +4,4 @@ bash $workdir/sh/generate.sh
 echo "image build done"
 # 推镜像和配置文件
 bash $workdir/sh/trans_master.sh
-echo "update images donw"
+echo "update images done"
