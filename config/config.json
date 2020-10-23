@@ -1,9 +1,9 @@
 {
     "projectpwd":"/home/centos/go/src/github.com/shardingBC",
-    "benchpwd":"/home/centos/go/src/github.com/shardingBC",
+    "benchpwd": "/home/centos/go/src/github.com/shardingBC",
     "topopwd":"/home/centos/go/src/github.com/reconfiguration",
     "projectbin":"/home/centos/go/bin",
-    "depolymentpwd":"/home/centos/theGloves/workspace/deployment",
+    "depolymentpwd":"/home/centos/go/src/github.com/deployment_k8s",
     "Home":"/home/centos",
     "Data":"/home/centos/NFS500",
     "containerid":"777fd3674c7c4cd2a70f3b5951013e3f3d419969cbfafd398e554557895fa974",
