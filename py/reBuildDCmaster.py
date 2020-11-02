@@ -4,7 +4,7 @@ import sys
 import math
 from collections import OrderedDict
 import networkx as nx
-
+from json import loads
 
 def knowm(n):  # 求m值
     m = math.ceil(pow(n, 1/3))
@@ -128,7 +128,7 @@ def name_gen1(N, n):
 
 
 # main entry
-image_name = "10.77.70.142:5000/shardingbc:latest"
+image_name = "10.77.70.142:5000/shardingbc:v2.1"
 
 # 得到想要新生成的节点的个数
 n_node = int(sys.argv[1])
@@ -169,7 +169,8 @@ for i in range(1, n_node+1):
                   "count": n_node,
                   "node_num": i,
                   "shard_num": shard,
-                  "threshold": get_threshold(n_node+1)
+                  "threshold": get_threshold(n_node+1),
+				  "ip_addr": "10.43.{}.{}".format(shard, 100+i)
                   }
 
     f.write(template.format(**parameters))

@@ -11,7 +11,7 @@ rate = sys.argv[5]  # rate
 shard="0"
 if shard_count == 1:
 
-    cmd = "cd dist;./tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T +" -shard "+shard+ " tt0s1:26657"
+    cmd = "./dist/tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T +" -shard "+shard+ " 10.43.0.101:26657"
     print(cmd)
 else:
     Send_shard = ""  # 要发往哪些分片
@@ -26,16 +26,18 @@ else:
     flag = 0
     for i in range(0, shard_count ):
         shard_name = str(i)
-        shard_node = "tt"+shard_name+"s"+str(random.randint(1,int(send_count)))+":26657"
-        cmd = "cd dist;./tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T + " -shard " +shard_name+" -as " + Send_shard + " " + shard_node
+        #shard_node = "tt"+shard_name+"s"+str(random.randint(1,int(send_count)))+":26657"
+        #shard_node = "10.43.{}.{}:26657".format(i, 100+random.randint(1,int(send_count)))
+        shard_node = "10.43.{}.{}:26657".format(i, 100+1)
+        cmd = "./dist/tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T + " -shard " +shard_name+" -as " + Send_shard + " " + shard_node
         if i == (shard_count-1):
-            cmd = "./tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T + " -shard " +shard_name+" -as " + Send_shard + " " + shard_node
+            cmd = "./dist/tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T + " -shard " +shard_name+" -as " + Send_shard + " " + shard_node
             cmd_set = cmd_set + " &" + cmd
         else:
             if flag == 0:
                 cmd_set = cmd
                 flag = 1
             else:
-                cmd1 = "./tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T + " -shard " + shard_name + " -as " + Send_shard + " " + shard_node
+                cmd1 = "./dist/tm-bench_simulator -rate " + rate + " -r " + r + " -T " + T + " -shard " + shard_name + " -as " + Send_shard + " " + shard_node
                 cmd_set = cmd_set + " &" + cmd1
     print(cmd_set)

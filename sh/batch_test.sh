@@ -1,5 +1,4 @@
 #! /bin/bash
-
 # 样例 使用eth数据，测试单片8、16、32、64节点 发送速率200、400、600、800、1000
 # bash batach_test.sh -E -n 8,16,32,64 -s 1 -t 200,400,600,800,1000
 
@@ -25,10 +24,11 @@ main() {
       if [ ${NO_RECONFIG} -eq 0 ]; then
         bash createfilemaster.sh ${node} ${shard} >/dev/null 2>&1
       fi
-      bash sendmasterfile2.sh >/dev/null 2>&1
-	  curl -XPOST "http://127.0.0.1:9200/tendermint-20201007/_delete_by_query" -H 'Content-Type: application/json' -d'{  "query": {    "terms": {      "@log_name": ["tendermint.error","tendermint.tps","tendermint.latency"]    }  }}'
+      ./bin/kubectl delete -n tendermint services,deployments -l app=shardingbc
+      bash sh/sendmasterfile.sh >/dev/null 2>&1
+  	  #curl -XPOST "http://127.0.0.1:9200/tendermint-20201007/_delete_by_query" -H 'Content-Type: application/json' -d'{  "query": {    "terms": {      "@log_name": ["tendermint.error","tendermint.tps","tendermint.latency"]    }  }}'
 	  ./bin/kubectl create -n tendermint -f network/docker-compose.yaml 
-      sleep $TEST_INTERVAL
+#      sleep $TEST_INTERVAL
       for tx in $TX_NUM; do
         sleep $TEST_INTERVAL
         echo "========== ${shard} ${node} ${tx} test begin =========="
@@ -38,24 +38,23 @@ main() {
         else
           cr_tmp=${CROSS_RATE}
         fi
-        # rm -rf /opt/fluentd/data/latency.*
+        rm -rf /home/centos/theGloves/workspace/EFK/fluentd/data/latency.*
         bash ${TEST_SCRIPT} ${shard} ${tx} ${TEST_DURATION} ${node} ${cr_tmp}
         # 打印结果 分片数 片内节点数 发送速率 TPS
-        echo "${shard} ${node} ${tx} $(tail -n 1 tps/tps.log | awk '{ print $5 }')" >>batch.log
+        echo "${shard} ${node} ${tx} $(tail -n 1 tps/tps.log | awk '{ print $5 }')" >> tps/batch.log
         echo "${shard} ${node} ${tx} $(tail -n 1 tps/tps.log | awk '{ print $5 }')"
 
-        # 等待日志刷新到磁盘
-        # sleep 61
+        # 等待日志落盘
+        sleep 61
         # 日志转储 后续分析
-        # mkdir /opt/fluentd/data/${shard}_${node}_${tx}
-        # mv /opt/fluentd/data/latency.* /opt/fluentd/data/${shard}_${node}_${tx}
-		echo "========== ${shard} ${node} test done =========="
+        mkdir /home/centos/theGloves/workspace/EFK/fluentd/data/${shard}_${node}_${tx}
+        mv /home/centos/theGloves/workspace/EFK/fluentd/data/latency.* /home/centos/theGloves/workspace/EFK/fluentd/data/${shard}_${node}_${tx}
+  		echo "========== ${shard} ${node} test done =========="
       done
     done
 
     # 删除部署的应用
-	./bin/kubectl delete -n tendermint services,deployments -l app-shardingbc
-    sleep $TEST_INTERVAL #多睡会保证清楚干净
+  	./bin/kubectl delete -n tendermint services,deployments -l app=shardingbc
   done
 }
 

@@ -8,6 +8,16 @@ rm -r $workdir/network
 rm -f $workdir/topogensis.json
 rm -f $workdir/shard.json
 
+# 在cache中检查是否有生成好的配置文件
+# cache_name编码格式
+# cut 删除输出hash值后面的‘-’小尾巴·
+cache_name=`echo -n "${file_num}_${node_cnt}" | md5sum | cut -d" " -f1`
+
+if [  -d "./cache/${cache_name}" ];then
+	cp -R ./cache/${cache_name} ./network
+	exit
+fi
+
 for (( j = 1; j <= $file_num; j++ ))
 do
 		count=$(($j-1))
@@ -50,3 +60,8 @@ mv /$workdir/network/shard.json $workdir/config/
 mv $workdir/network/data.json  $workdir/config/
 
 sudo rm -rf node[0-9]*
+sudo rm -rf [0-9]+S[0-9]+
+
+# 将此次生成的配置添加到cache中
+
+cp -R network cache/${cache_name}
