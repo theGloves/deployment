@@ -9,3 +9,4 @@ sum.log
 key/*
 .rancher
 batch.log
+./cache/*
