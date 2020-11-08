@@ -20,5 +20,5 @@ quick:
 	./bin/kubectl create -n tendermint -f network/docker-compose.yaml 
 
 test:
-	bash sh/batch_test.sh -n 8 -r 2 -s 4,8,12 -t 100 -i 60 -d 60
-	bash sh/batch_test.sh -n 8 -r 2 -s 4,8,12 -t 500 -i 60 -d 60
+	bash tm-simulator.sh 1 300 90 32 2000000
+	#bash sh/batch_test.sh -n 8,16,32,64 -r 999999 -s 1 -t 200,400,600,800,1000 -i 60 -d 60

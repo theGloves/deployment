@@ -128,7 +128,7 @@ def name_gen1(N, n):
 
 
 # main entry
-image_name = "10.77.70.142:5000/shardingbc:v2.1"
+image_name = "10.77.70.142:5000/shardingbc:v2.4"
 
 # 得到想要新生成的节点的个数
 n_node = int(sys.argv[1])

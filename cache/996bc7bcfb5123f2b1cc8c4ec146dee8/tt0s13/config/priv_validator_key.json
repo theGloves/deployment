@@ -1,0 +1,11 @@
+{
+  "address": "D2B219ADE69E8ECFD2B81A593AACCD4329ABEA7F",
+  "pub_key": {
+    "type": "tendermint/PubKeyBLS",
+    "value": "FR/OJVDioVgeDLabSpOkWeELzNZHnTS0vFczWimH6mkcZ+rOOJ/m+7qtSVt8iiX7UiVWKhv7iI8FWvfVRnBcjYfQfXj2MbsoUchV7Ls6ugtzzFrUUH7ILyiCdXu+Qw+qBdhMe5twGbkEDDlXVrsP4jm4rRCClTUmkZwWJW1vd8I="
+  },
+  "priv_key": {
+    "type": "tendermint/PrivKeyBLS",
+    "value": "UFprRSXePtDh4tOMQ6ick4VQLWUpjVNTWLz9osT0oDo="
+  }
+}

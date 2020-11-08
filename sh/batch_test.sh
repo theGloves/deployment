@@ -34,7 +34,7 @@ main() {
         echo "========== ${shard} ${node} ${tx} test begin =========="
         txtmp=$(expr $(($tx / $shard)))
         if [ $shard = '1' ]; then
-          cr_tmp=99999
+          cr_tmp=9999999
         else
           cr_tmp=${CROSS_RATE}
         fi
@@ -44,11 +44,11 @@ main() {
         echo "${shard} ${node} ${tx} $(tail -n 1 tps/tps.log | awk '{ print $5 }')" >> tps/batch.log
         echo "${shard} ${node} ${tx} $(tail -n 1 tps/tps.log | awk '{ print $5 }')"
 
-        # 等待日志落盘
-        sleep 61
-        # 日志转储 后续分析
-        mkdir /home/centos/theGloves/workspace/EFK/fluentd/data/${shard}_${node}_${tx}
-        mv /home/centos/theGloves/workspace/EFK/fluentd/data/latency.* /home/centos/theGloves/workspace/EFK/fluentd/data/${shard}_${node}_${tx}
+#        # 等待日志落盘
+#        sleep 61
+#        # 日志转储 后续分析
+#        mkdir /home/centos/theGloves/workspace/EFK/fluentd/data/${shard}_${node}_${tx}
+#        mv /home/centos/theGloves/workspace/EFK/fluentd/data/latency.* /home/centos/theGloves/workspace/EFK/fluentd/data/${shard}_${node}_${tx}
   		echo "========== ${shard} ${node} test done =========="
       done
     done

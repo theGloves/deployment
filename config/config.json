@@ -6,6 +6,6 @@
     "depolymentpwd":"/home/centos/go/src/github.com/deployment_k8s",
     "Home":"/home/centos",
     "Data":"/home/centos/NFS500",
-    "containerid":"16d042228107",
-    "image":"10.77.70.142:5000/shardingbc:latest"
+    "containerid":"15ef5971c48b",
+    "image":"10.77.70.142:5000/shardingbc:v2.4"
 }

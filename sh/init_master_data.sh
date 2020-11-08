@@ -71,12 +71,12 @@ Node_str=""
         #echo "${shard_name}_$i $node_id"$(cat $default_genesis | jq ".chain_id") >> $workdir/topogensis.json
         nodekey="./node${i}_data/config/node_key.json"
         priv_validator_key="./node${i}_data/config/priv_validator_key.json"
-	    echo $(cat $default_genesis | jq ".validators[$i-1].name = \"${shard_name}S$i\" ") > $default_genesis
+	    echo $(cat $default_genesis | jq ".validators[$i-1].name = \"tt${shard_name}s$i\" ") > $default_genesis
         
         if [[ ${i} = $node_cnt ]];then
              echo "{
                 \"ShardName\":\"$(($shard_now-1))\",
-                \"NodeName\":\"${shard_name}S$i\",
+                \"NodeName\":\"tt${shard_name}s$i\",
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
@@ -85,7 +85,7 @@ Node_str=""
         elif [[ ${i} = 1 ]];then
              echo "[{
                 \"ShardName\":\"$(($shard_now-1))\",
-                \"NodeName\":\"${shard_name}S$i\",
+                \"NodeName\":\"tt${shard_name}s$i\",
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"
@@ -93,7 +93,7 @@ Node_str=""
         else 
             echo "{
                 \"ShardName\":\"$(($shard_now-1))\",
-                \"NodeName\":\"${shard_name}S$i\",
+                \"NodeName\":\"tt${shard_name}s$i\",
                 \"Coordinate\":\"$(($i-1))\",
                 \"Peerid\":\"$node_id\",
                 \"Neighbor\":\"\"

@@ -26,10 +26,9 @@ def get_axis_pos(data):
     return len(x_axis)
 
 
-def get_axis_name(data):
-    for i in range(len(x_axis)):
-        if eval("{}{}".format(data, x_axis[i])):
-            return x_axis[i]
+def get_axis_name(i):
+    if i <len(x_axis):
+        return x_axis[i]
     return x_axis[len(x_axis) - 1].replace("<", ">=")
 
 

@@ -48,13 +48,16 @@ spec:
         volumeMounts:
           - mountPath: /tendermint/config
             name: vs{shard_num}{node_num}
-        # resources:
-        #   limits:
+        #resources:
+        #   requests:
         #     cpu: "1"
         #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
       volumes:
         - hostPath:
-            path: /home/centos/NFS500/network/{shard_num}S{node_num}/config
+            path: /home/centos/NFS500/network/tt{shard_num}s{node_num}/config
             type: ""
           name: vs{shard_num}{node_num}
 ---
@@ -69,6 +72,7 @@ spec:
   selector:
     name: {node_name}
   type:  ClusterIP
+  clusterIP: {ip_addr}
   ports:
   - name:  default
     port:  42
