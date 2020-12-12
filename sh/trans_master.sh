@@ -1,7 +1,4 @@
-workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
-ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
-ted_bin=$(echo $(cat config/config.json | jq ".projectbin")|sed 's/\"//g')
-image=$(echo $(cat config/config.json | jq ".image")|sed 's/\"//g')
+source ./sh/head.sh
 
 # 上传镜像
 sudo docker push ${image}

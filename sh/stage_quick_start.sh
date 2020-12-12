@@ -1,4 +1,4 @@
-workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
+source ./sh/head.sh
 # 编译
 bash $workdir/sh/generate.sh 
 echo "image build done"

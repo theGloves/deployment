@@ -1,5 +1,4 @@
-workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
-ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
+source ./sh/head.sh
 
 # 清空es
 #curl -XPOST "http://127.0.0.1:9200/localtest-20200921/_delete_by_query" -H 'Content-Type: application/json' -d'{  "query": {    "terms": {      "@log_name": ["tendermint.error","tendermint.tps","tendermint.latency"]    }  }}'

@@ -1,14 +1,10 @@
+source ./sh/head.sh
+
 node_cnt=$1
-tendermint_img="registry-vpc.cn-beijing.aliyuncs.com/ruc500/shardingbc:latest"
-# tendermint_img="registry-vpc.cn-beijing.aliyuncs.com/ruc500/tendermint:0.31"
 shard=$2
 shard_count=$3
 shard_name=$4
 shard_now=$5
-workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
-ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
-ted_bin=$(echo $(cat config/config.json | jq ".projectbin")|sed 's/\"//g')
-image=$(echo $(cat config/config.json | jq ".image")|sed 's/\"//g')
 
 #./init_data.sh 3 A  
 is_osx () {

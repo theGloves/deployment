@@ -128,7 +128,7 @@ def name_gen1(N, n):
 
 
 # main entry
-image_name = "10.77.70.142:5000/shardingbc:v2.4"
+image_name = "10.77.70.142:5000/tendermint:0.31.4"
 
 # 得到想要新生成的节点的个数
 n_node = int(sys.argv[1])
@@ -145,7 +145,7 @@ template = ""
 with open(template_filename, "r") as f:
     template = f.read()
 
-
+print(sys.argv)
 # 生成persisitent_peers
 persisitent_peers = []
 for i in range(1, n_node+1):

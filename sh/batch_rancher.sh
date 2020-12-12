@@ -1,6 +1,4 @@
-workdir=$(echo $(cat config/config.json | jq ".depolymentpwd")|sed 's/\"//g')
-ted_dir=$(echo $(cat config/config.json | jq ".projectpwd")|sed 's/\"//g')
-ted_bin=$(echo $(cat config/config.json | jq ".projectbin")|sed 's/\"//g')
+source ./sh/head.sh
 
 index=1
 # 到每个服务器上依次拉取镜像

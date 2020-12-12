@@ -1,9 +1,7 @@
 #!/bin/bash
-node_cnt=$1
-workdir=$(echo $(cat config/config.json | jq ".depolymentpwd") | sed 's/\"//g')
-ted_dir=$(echo $(cat config/config.json | jq ".projectpwd") | sed 's/\"//g')
-image=$(echo $(cat config/config.json | jq ".image") | sed 's/\"//g')
+source ./sh/head.sh
 
+node_cnt=$1
 file_num=$2
 
 rm -r $workdir/network
@@ -17,8 +15,8 @@ cache_name=$(echo -n "${file_num}_${node_cnt}_${image}" | md5sum | cut -d" " -f1
 
 if [ -d "./cache/${cache_name}" ]; then
 	echo $cache_name
-	cp -R ./cache/${cache_name} ./network
-	exit
+ 	cp -R ./cache/${cache_name} ./network
+ 	exit
 fi
 
 for ((j = 1; j <= $file_num; j++)); do

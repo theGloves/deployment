@@ -1,0 +1,4128 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s1
+  labels:
+    name: tt0s1
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s1
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s1
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=973d32bcb4e2d2b6b37664f8e026db7e0d63cc73@tt0s5:26656,883d2f2c731d82a0ed1726e56e0ec7190b17fca3@tt0s3:26656,6260548903d29d61b656f3e4fdf179095cf0ebe7@tt0s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "1"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs01
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s1/config
+            type: ""
+          name: vs01
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s1
+  labels:
+    name: tt0s1
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s1
+  type:  ClusterIP
+  clusterIP: 10.43.0.101
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s2
+  labels:
+    name: tt0s2
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s2
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s2
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=13a97c2b7a978276611e0c1e8b5dd20d85501383@tt0s1:26656,76e29eed568e20418d136f806710998e899d3092@tt0s4:26656,2f23698c4e0b56e2f3d6a49f93476a1218c2e7fe@tt0s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "2"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs02
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s2/config
+            type: ""
+          name: vs02
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s2
+  labels:
+    name: tt0s2
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s2
+  type:  ClusterIP
+  clusterIP: 10.43.0.102
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s3
+  labels:
+    name: tt0s3
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s3
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s3
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=13a97c2b7a978276611e0c1e8b5dd20d85501383@tt0s1:26656,73b8d0a10423074cb9eeef9b3ab8d1eb7acf4a3d@tt0s7:26656,76e29eed568e20418d136f806710998e899d3092@tt0s4:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "3"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs03
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s3/config
+            type: ""
+          name: vs03
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s3
+  labels:
+    name: tt0s3
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s3
+  type:  ClusterIP
+  clusterIP: 10.43.0.103
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s4
+  labels:
+    name: tt0s4
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s4
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s4
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=883d2f2c731d82a0ed1726e56e0ec7190b17fca3@tt0s3:26656,6260548903d29d61b656f3e4fdf179095cf0ebe7@tt0s2:26656,920d35283e1f006b9705ffba6ca6d6a95e6917d0@tt0s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "4"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs04
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s4/config
+            type: ""
+          name: vs04
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s4
+  labels:
+    name: tt0s4
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s4
+  type:  ClusterIP
+  clusterIP: 10.43.0.104
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s5
+  labels:
+    name: tt0s5
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s5
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s5
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=13a97c2b7a978276611e0c1e8b5dd20d85501383@tt0s1:26656,73b8d0a10423074cb9eeef9b3ab8d1eb7acf4a3d@tt0s7:26656,2f23698c4e0b56e2f3d6a49f93476a1218c2e7fe@tt0s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "5"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs05
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s5/config
+            type: ""
+          name: vs05
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s5
+  labels:
+    name: tt0s5
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s5
+  type:  ClusterIP
+  clusterIP: 10.43.0.105
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s6
+  labels:
+    name: tt0s6
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s6
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s6
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=973d32bcb4e2d2b6b37664f8e026db7e0d63cc73@tt0s5:26656,920d35283e1f006b9705ffba6ca6d6a95e6917d0@tt0s8:26656,6260548903d29d61b656f3e4fdf179095cf0ebe7@tt0s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "6"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs06
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s6/config
+            type: ""
+          name: vs06
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s6
+  labels:
+    name: tt0s6
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s6
+  type:  ClusterIP
+  clusterIP: 10.43.0.106
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s7
+  labels:
+    name: tt0s7
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s7
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s7
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=973d32bcb4e2d2b6b37664f8e026db7e0d63cc73@tt0s5:26656,883d2f2c731d82a0ed1726e56e0ec7190b17fca3@tt0s3:26656,920d35283e1f006b9705ffba6ca6d6a95e6917d0@tt0s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "7"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs07
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s7/config
+            type: ""
+          name: vs07
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s7
+  labels:
+    name: tt0s7
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s7
+  type:  ClusterIP
+  clusterIP: 10.43.0.107
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt0s8
+  labels:
+    name: tt0s8
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt0s8
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 0
+      containers:
+      - name: tt0s8
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=76e29eed568e20418d136f806710998e899d3092@tt0s4:26656,2f23698c4e0b56e2f3d6a49f93476a1218c2e7fe@tt0s6:26656,73b8d0a10423074cb9eeef9b3ab8d1eb7acf4a3d@tt0s7:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "0"
+          - name: TASKINDEX 
+            value: "8"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs08
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt0s8/config
+            type: ""
+          name: vs08
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt0s8
+  labels:
+    name: tt0s8
+    app: shardingbc
+spec:
+  selector:
+    name: tt0s8
+  type:  ClusterIP
+  clusterIP: 10.43.0.108
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s1
+  labels:
+    name: tt1s1
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s1
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s1
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=ef3f38181ae726aeda34c12429be4e1b03050e7a@tt1s5:26656,768bf1284b3209d4df4a81aafb24d9b51508f792@tt1s3:26656,b726412126f9ecb5e4a1d394f841451153073bdc@tt1s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "1"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs11
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s1/config
+            type: ""
+          name: vs11
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s1
+  labels:
+    name: tt1s1
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s1
+  type:  ClusterIP
+  clusterIP: 10.43.1.101
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s2
+  labels:
+    name: tt1s2
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s2
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s2
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=c55000cac0acbe8d45e3bcd09e7eafc4c9c041e0@tt1s1:26656,5703fde1f6349d8627b95a6b1609be0bbc8d8008@tt1s4:26656,a022dc0100676573ce280032b6c97519aa0654df@tt1s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "2"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs12
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s2/config
+            type: ""
+          name: vs12
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s2
+  labels:
+    name: tt1s2
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s2
+  type:  ClusterIP
+  clusterIP: 10.43.1.102
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s3
+  labels:
+    name: tt1s3
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s3
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s3
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=c55000cac0acbe8d45e3bcd09e7eafc4c9c041e0@tt1s1:26656,28dbf241c3d6f18bb5dcf6c78b2378187b4267f6@tt1s7:26656,5703fde1f6349d8627b95a6b1609be0bbc8d8008@tt1s4:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "3"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs13
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s3/config
+            type: ""
+          name: vs13
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s3
+  labels:
+    name: tt1s3
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s3
+  type:  ClusterIP
+  clusterIP: 10.43.1.103
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s4
+  labels:
+    name: tt1s4
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s4
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s4
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=768bf1284b3209d4df4a81aafb24d9b51508f792@tt1s3:26656,b726412126f9ecb5e4a1d394f841451153073bdc@tt1s2:26656,4f766c8db35fde42b7f485e7fbdd0126ca14cd4c@tt1s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "4"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs14
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s4/config
+            type: ""
+          name: vs14
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s4
+  labels:
+    name: tt1s4
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s4
+  type:  ClusterIP
+  clusterIP: 10.43.1.104
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s5
+  labels:
+    name: tt1s5
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s5
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s5
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=c55000cac0acbe8d45e3bcd09e7eafc4c9c041e0@tt1s1:26656,28dbf241c3d6f18bb5dcf6c78b2378187b4267f6@tt1s7:26656,a022dc0100676573ce280032b6c97519aa0654df@tt1s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "5"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs15
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s5/config
+            type: ""
+          name: vs15
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s5
+  labels:
+    name: tt1s5
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s5
+  type:  ClusterIP
+  clusterIP: 10.43.1.105
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s6
+  labels:
+    name: tt1s6
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s6
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s6
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=ef3f38181ae726aeda34c12429be4e1b03050e7a@tt1s5:26656,4f766c8db35fde42b7f485e7fbdd0126ca14cd4c@tt1s8:26656,b726412126f9ecb5e4a1d394f841451153073bdc@tt1s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "6"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs16
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s6/config
+            type: ""
+          name: vs16
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s6
+  labels:
+    name: tt1s6
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s6
+  type:  ClusterIP
+  clusterIP: 10.43.1.106
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s7
+  labels:
+    name: tt1s7
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s7
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s7
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=ef3f38181ae726aeda34c12429be4e1b03050e7a@tt1s5:26656,768bf1284b3209d4df4a81aafb24d9b51508f792@tt1s3:26656,4f766c8db35fde42b7f485e7fbdd0126ca14cd4c@tt1s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "7"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs17
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s7/config
+            type: ""
+          name: vs17
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s7
+  labels:
+    name: tt1s7
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s7
+  type:  ClusterIP
+  clusterIP: 10.43.1.107
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt1s8
+  labels:
+    name: tt1s8
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt1s8
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 1
+      containers:
+      - name: tt1s8
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=5703fde1f6349d8627b95a6b1609be0bbc8d8008@tt1s4:26656,a022dc0100676573ce280032b6c97519aa0654df@tt1s6:26656,28dbf241c3d6f18bb5dcf6c78b2378187b4267f6@tt1s7:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "1"
+          - name: TASKINDEX 
+            value: "8"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs18
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt1s8/config
+            type: ""
+          name: vs18
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt1s8
+  labels:
+    name: tt1s8
+    app: shardingbc
+spec:
+  selector:
+    name: tt1s8
+  type:  ClusterIP
+  clusterIP: 10.43.1.108
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s1
+  labels:
+    name: tt2s1
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s1
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s1
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=2d934c25d0dee6c3791a219b54af006b421990e6@tt2s5:26656,4d2ea1fd0e67f37816565b7ece35d1df9fe6f880@tt2s3:26656,db6ecdedb570806eeccba3b0143e5ef12ee3d0c2@tt2s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "1"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs21
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s1/config
+            type: ""
+          name: vs21
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s1
+  labels:
+    name: tt2s1
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s1
+  type:  ClusterIP
+  clusterIP: 10.43.2.101
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s2
+  labels:
+    name: tt2s2
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s2
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s2
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=b22b1893ba498ea028e69a30045ad61ca2244517@tt2s1:26656,c1ea03a484bead0499b9a9445b6ebf3ecda0e8e4@tt2s4:26656,f3bfaf95102508ef6d41223eddb125350a76c2ea@tt2s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "2"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs22
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s2/config
+            type: ""
+          name: vs22
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s2
+  labels:
+    name: tt2s2
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s2
+  type:  ClusterIP
+  clusterIP: 10.43.2.102
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s3
+  labels:
+    name: tt2s3
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s3
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s3
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=b22b1893ba498ea028e69a30045ad61ca2244517@tt2s1:26656,a75802159f126c9faaccd77742a9d35b0feeded2@tt2s7:26656,c1ea03a484bead0499b9a9445b6ebf3ecda0e8e4@tt2s4:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "3"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs23
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s3/config
+            type: ""
+          name: vs23
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s3
+  labels:
+    name: tt2s3
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s3
+  type:  ClusterIP
+  clusterIP: 10.43.2.103
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s4
+  labels:
+    name: tt2s4
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s4
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s4
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=4d2ea1fd0e67f37816565b7ece35d1df9fe6f880@tt2s3:26656,db6ecdedb570806eeccba3b0143e5ef12ee3d0c2@tt2s2:26656,cfaac88cf38f4f3219e06b1c2af22669e7b1b01a@tt2s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "4"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs24
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s4/config
+            type: ""
+          name: vs24
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s4
+  labels:
+    name: tt2s4
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s4
+  type:  ClusterIP
+  clusterIP: 10.43.2.104
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s5
+  labels:
+    name: tt2s5
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s5
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s5
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=b22b1893ba498ea028e69a30045ad61ca2244517@tt2s1:26656,a75802159f126c9faaccd77742a9d35b0feeded2@tt2s7:26656,f3bfaf95102508ef6d41223eddb125350a76c2ea@tt2s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "5"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs25
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s5/config
+            type: ""
+          name: vs25
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s5
+  labels:
+    name: tt2s5
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s5
+  type:  ClusterIP
+  clusterIP: 10.43.2.105
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s6
+  labels:
+    name: tt2s6
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s6
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s6
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=2d934c25d0dee6c3791a219b54af006b421990e6@tt2s5:26656,cfaac88cf38f4f3219e06b1c2af22669e7b1b01a@tt2s8:26656,db6ecdedb570806eeccba3b0143e5ef12ee3d0c2@tt2s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "6"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs26
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s6/config
+            type: ""
+          name: vs26
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s6
+  labels:
+    name: tt2s6
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s6
+  type:  ClusterIP
+  clusterIP: 10.43.2.106
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s7
+  labels:
+    name: tt2s7
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s7
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s7
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=2d934c25d0dee6c3791a219b54af006b421990e6@tt2s5:26656,4d2ea1fd0e67f37816565b7ece35d1df9fe6f880@tt2s3:26656,cfaac88cf38f4f3219e06b1c2af22669e7b1b01a@tt2s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "7"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs27
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s7/config
+            type: ""
+          name: vs27
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s7
+  labels:
+    name: tt2s7
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s7
+  type:  ClusterIP
+  clusterIP: 10.43.2.107
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt2s8
+  labels:
+    name: tt2s8
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt2s8
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 2
+      containers:
+      - name: tt2s8
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=c1ea03a484bead0499b9a9445b6ebf3ecda0e8e4@tt2s4:26656,f3bfaf95102508ef6d41223eddb125350a76c2ea@tt2s6:26656,a75802159f126c9faaccd77742a9d35b0feeded2@tt2s7:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "2"
+          - name: TASKINDEX 
+            value: "8"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs28
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt2s8/config
+            type: ""
+          name: vs28
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt2s8
+  labels:
+    name: tt2s8
+    app: shardingbc
+spec:
+  selector:
+    name: tt2s8
+  type:  ClusterIP
+  clusterIP: 10.43.2.108
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s1
+  labels:
+    name: tt3s1
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s1
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s1
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=3dac97db923f71aff092b8892edac823bc987032@tt3s5:26656,8e243ac66bd2bd998c339c8bf61dbc21f85d78b5@tt3s3:26656,7bea01ca15f40f4ba791483e0617a432eee033f2@tt3s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "1"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs31
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s1/config
+            type: ""
+          name: vs31
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s1
+  labels:
+    name: tt3s1
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s1
+  type:  ClusterIP
+  clusterIP: 10.43.3.101
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s2
+  labels:
+    name: tt3s2
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s2
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s2
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=8590696e1b23d45bf60dc20f33a137e539b07c41@tt3s1:26656,af8053e81422a2e831462ca0a9b6c73222d8f2df@tt3s4:26656,7ef9690f0acdf076a85eeab28d862295eef80e88@tt3s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "2"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs32
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s2/config
+            type: ""
+          name: vs32
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s2
+  labels:
+    name: tt3s2
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s2
+  type:  ClusterIP
+  clusterIP: 10.43.3.102
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s3
+  labels:
+    name: tt3s3
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s3
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s3
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=8590696e1b23d45bf60dc20f33a137e539b07c41@tt3s1:26656,f80b573f917a85c8ba1a7d19df49cc79226b02da@tt3s7:26656,af8053e81422a2e831462ca0a9b6c73222d8f2df@tt3s4:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "3"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs33
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s3/config
+            type: ""
+          name: vs33
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s3
+  labels:
+    name: tt3s3
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s3
+  type:  ClusterIP
+  clusterIP: 10.43.3.103
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s4
+  labels:
+    name: tt3s4
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s4
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s4
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=8e243ac66bd2bd998c339c8bf61dbc21f85d78b5@tt3s3:26656,7bea01ca15f40f4ba791483e0617a432eee033f2@tt3s2:26656,20316d4e351fd20c6b280a2bd51f1599ee844ab9@tt3s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "4"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs34
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s4/config
+            type: ""
+          name: vs34
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s4
+  labels:
+    name: tt3s4
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s4
+  type:  ClusterIP
+  clusterIP: 10.43.3.104
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s5
+  labels:
+    name: tt3s5
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s5
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s5
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=8590696e1b23d45bf60dc20f33a137e539b07c41@tt3s1:26656,f80b573f917a85c8ba1a7d19df49cc79226b02da@tt3s7:26656,7ef9690f0acdf076a85eeab28d862295eef80e88@tt3s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "5"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs35
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s5/config
+            type: ""
+          name: vs35
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s5
+  labels:
+    name: tt3s5
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s5
+  type:  ClusterIP
+  clusterIP: 10.43.3.105
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s6
+  labels:
+    name: tt3s6
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s6
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s6
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=3dac97db923f71aff092b8892edac823bc987032@tt3s5:26656,20316d4e351fd20c6b280a2bd51f1599ee844ab9@tt3s8:26656,7bea01ca15f40f4ba791483e0617a432eee033f2@tt3s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "6"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs36
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s6/config
+            type: ""
+          name: vs36
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s6
+  labels:
+    name: tt3s6
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s6
+  type:  ClusterIP
+  clusterIP: 10.43.3.106
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s7
+  labels:
+    name: tt3s7
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s7
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s7
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=3dac97db923f71aff092b8892edac823bc987032@tt3s5:26656,8e243ac66bd2bd998c339c8bf61dbc21f85d78b5@tt3s3:26656,20316d4e351fd20c6b280a2bd51f1599ee844ab9@tt3s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "7"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs37
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s7/config
+            type: ""
+          name: vs37
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s7
+  labels:
+    name: tt3s7
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s7
+  type:  ClusterIP
+  clusterIP: 10.43.3.107
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt3s8
+  labels:
+    name: tt3s8
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt3s8
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 3
+      containers:
+      - name: tt3s8
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=af8053e81422a2e831462ca0a9b6c73222d8f2df@tt3s4:26656,7ef9690f0acdf076a85eeab28d862295eef80e88@tt3s6:26656,f80b573f917a85c8ba1a7d19df49cc79226b02da@tt3s7:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "3"
+          - name: TASKINDEX 
+            value: "8"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs38
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt3s8/config
+            type: ""
+          name: vs38
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt3s8
+  labels:
+    name: tt3s8
+    app: shardingbc
+spec:
+  selector:
+    name: tt3s8
+  type:  ClusterIP
+  clusterIP: 10.43.3.108
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s1
+  labels:
+    name: tt4s1
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s1
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s1
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=b742e47a80f9dd6700a7b1ac3b227f535cdc23f8@tt4s5:26656,5f0331e7b8f4e7fd5ee8b0970a1a699483ce5591@tt4s3:26656,34bd85ad1fe6b85442562a01b453e1e9c10fb29b@tt4s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "1"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs41
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s1/config
+            type: ""
+          name: vs41
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s1
+  labels:
+    name: tt4s1
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s1
+  type:  ClusterIP
+  clusterIP: 10.43.4.101
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s2
+  labels:
+    name: tt4s2
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s2
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s2
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=f3ce8ad2e28d53fd3cd37dcd831d22e76b47a7f6@tt4s1:26656,d1318d92925d4d4ffc94fee8a94dde6bb763c161@tt4s4:26656,cbb4dbcafbcaefbdce34fca48068f2c2d47c4bfd@tt4s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "2"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs42
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s2/config
+            type: ""
+          name: vs42
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s2
+  labels:
+    name: tt4s2
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s2
+  type:  ClusterIP
+  clusterIP: 10.43.4.102
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s3
+  labels:
+    name: tt4s3
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s3
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s3
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=f3ce8ad2e28d53fd3cd37dcd831d22e76b47a7f6@tt4s1:26656,9422ecaa6fcd7b0e90127a7c33bdac4d8a58e872@tt4s7:26656,d1318d92925d4d4ffc94fee8a94dde6bb763c161@tt4s4:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "3"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs43
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s3/config
+            type: ""
+          name: vs43
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s3
+  labels:
+    name: tt4s3
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s3
+  type:  ClusterIP
+  clusterIP: 10.43.4.103
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s4
+  labels:
+    name: tt4s4
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s4
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s4
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=5f0331e7b8f4e7fd5ee8b0970a1a699483ce5591@tt4s3:26656,34bd85ad1fe6b85442562a01b453e1e9c10fb29b@tt4s2:26656,658575719efb9c591009608a0d63239f3ee9bd6c@tt4s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "4"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs44
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s4/config
+            type: ""
+          name: vs44
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s4
+  labels:
+    name: tt4s4
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s4
+  type:  ClusterIP
+  clusterIP: 10.43.4.104
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s5
+  labels:
+    name: tt4s5
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s5
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s5
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=f3ce8ad2e28d53fd3cd37dcd831d22e76b47a7f6@tt4s1:26656,9422ecaa6fcd7b0e90127a7c33bdac4d8a58e872@tt4s7:26656,cbb4dbcafbcaefbdce34fca48068f2c2d47c4bfd@tt4s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "5"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs45
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s5/config
+            type: ""
+          name: vs45
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s5
+  labels:
+    name: tt4s5
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s5
+  type:  ClusterIP
+  clusterIP: 10.43.4.105
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s6
+  labels:
+    name: tt4s6
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s6
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s6
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=b742e47a80f9dd6700a7b1ac3b227f535cdc23f8@tt4s5:26656,658575719efb9c591009608a0d63239f3ee9bd6c@tt4s8:26656,34bd85ad1fe6b85442562a01b453e1e9c10fb29b@tt4s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "6"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs46
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s6/config
+            type: ""
+          name: vs46
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s6
+  labels:
+    name: tt4s6
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s6
+  type:  ClusterIP
+  clusterIP: 10.43.4.106
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s7
+  labels:
+    name: tt4s7
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s7
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s7
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=b742e47a80f9dd6700a7b1ac3b227f535cdc23f8@tt4s5:26656,5f0331e7b8f4e7fd5ee8b0970a1a699483ce5591@tt4s3:26656,658575719efb9c591009608a0d63239f3ee9bd6c@tt4s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "7"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs47
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s7/config
+            type: ""
+          name: vs47
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s7
+  labels:
+    name: tt4s7
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s7
+  type:  ClusterIP
+  clusterIP: 10.43.4.107
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt4s8
+  labels:
+    name: tt4s8
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt4s8
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 4
+      containers:
+      - name: tt4s8
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=d1318d92925d4d4ffc94fee8a94dde6bb763c161@tt4s4:26656,cbb4dbcafbcaefbdce34fca48068f2c2d47c4bfd@tt4s6:26656,9422ecaa6fcd7b0e90127a7c33bdac4d8a58e872@tt4s7:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "4"
+          - name: TASKINDEX 
+            value: "8"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs48
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt4s8/config
+            type: ""
+          name: vs48
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt4s8
+  labels:
+    name: tt4s8
+    app: shardingbc
+spec:
+  selector:
+    name: tt4s8
+  type:  ClusterIP
+  clusterIP: 10.43.4.108
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s1
+  labels:
+    name: tt5s1
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s1
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s1
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=23d24f44fdf46fe49764c0cf986546356606f272@tt5s5:26656,337ec142a9181af2a3f82f67e02e3681ee99d876@tt5s3:26656,e5ec1ce6cf1370d2bc21a496bfb92d440edf7950@tt5s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "1"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs51
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s1/config
+            type: ""
+          name: vs51
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s1
+  labels:
+    name: tt5s1
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s1
+  type:  ClusterIP
+  clusterIP: 10.43.5.101
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s2
+  labels:
+    name: tt5s2
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s2
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s2
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=12e2ef134097c353d30c06ca5097c07d56b685e2@tt5s1:26656,fa4ef4c6e77a8d1a9461fd579fa3b1553010fc3b@tt5s4:26656,fb98593514ce9a44e2b95cccfe4c2c9d1a74041c@tt5s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "2"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs52
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s2/config
+            type: ""
+          name: vs52
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s2
+  labels:
+    name: tt5s2
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s2
+  type:  ClusterIP
+  clusterIP: 10.43.5.102
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s3
+  labels:
+    name: tt5s3
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s3
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s3
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=12e2ef134097c353d30c06ca5097c07d56b685e2@tt5s1:26656,9770a3d9598f794c20eb188ed50da03e66f2c498@tt5s7:26656,fa4ef4c6e77a8d1a9461fd579fa3b1553010fc3b@tt5s4:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "3"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs53
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s3/config
+            type: ""
+          name: vs53
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s3
+  labels:
+    name: tt5s3
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s3
+  type:  ClusterIP
+  clusterIP: 10.43.5.103
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s4
+  labels:
+    name: tt5s4
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s4
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s4
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=337ec142a9181af2a3f82f67e02e3681ee99d876@tt5s3:26656,e5ec1ce6cf1370d2bc21a496bfb92d440edf7950@tt5s2:26656,8f3277675d40fa215a99ee7e4613365f4615c4e7@tt5s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "4"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs54
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s4/config
+            type: ""
+          name: vs54
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s4
+  labels:
+    name: tt5s4
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s4
+  type:  ClusterIP
+  clusterIP: 10.43.5.104
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s5
+  labels:
+    name: tt5s5
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s5
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s5
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=12e2ef134097c353d30c06ca5097c07d56b685e2@tt5s1:26656,9770a3d9598f794c20eb188ed50da03e66f2c498@tt5s7:26656,fb98593514ce9a44e2b95cccfe4c2c9d1a74041c@tt5s6:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "5"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs55
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s5/config
+            type: ""
+          name: vs55
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s5
+  labels:
+    name: tt5s5
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s5
+  type:  ClusterIP
+  clusterIP: 10.43.5.105
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s6
+  labels:
+    name: tt5s6
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s6
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s6
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=23d24f44fdf46fe49764c0cf986546356606f272@tt5s5:26656,8f3277675d40fa215a99ee7e4613365f4615c4e7@tt5s8:26656,e5ec1ce6cf1370d2bc21a496bfb92d440edf7950@tt5s2:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "6"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs56
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s6/config
+            type: ""
+          name: vs56
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s6
+  labels:
+    name: tt5s6
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s6
+  type:  ClusterIP
+  clusterIP: 10.43.5.106
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s7
+  labels:
+    name: tt5s7
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s7
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s7
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=23d24f44fdf46fe49764c0cf986546356606f272@tt5s5:26656,337ec142a9181af2a3f82f67e02e3681ee99d876@tt5s3:26656,8f3277675d40fa215a99ee7e4613365f4615c4e7@tt5s8:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "7"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs57
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s7/config
+            type: ""
+          name: vs57
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s7
+  labels:
+    name: tt5s7
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s7
+  type:  ClusterIP
+  clusterIP: 10.43.5.107
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tt5s8
+  labels:
+    name: tt5s8
+    app: shardingbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shardingbc
+  template:
+    metadata:
+      labels:
+        app: shardingbc
+        name: tt5s8
+    spec:
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: mylabel
+      #           operator: In
+      #           values:
+      #           - 5
+      containers:
+      - name: tt5s8
+        image: 10.77.70.142:5000/shardingbc:v2.4
+        imagePullPolicy: Always
+        command:
+          - tendermint
+          - node
+          - --p2p.persistent_peers=fa4ef4c6e77a8d1a9461fd579fa3b1553010fc3b@tt5s4:26656,fb98593514ce9a44e2b95cccfe4c2c9d1a74041c@tt5s6:26656,9770a3d9598f794c20eb188ed50da03e66f2c498@tt5s7:26656
+          - --moniker=`hostname`
+          - --proxy_app=persistent_kvstore
+        env:
+          - name: Count
+            value: "8"
+          - name: TASKID
+            value: "5"
+          - name: TASKINDEX 
+            value: "8"
+          - name: THRESHOLD
+            value: "6"
+        volumeMounts:
+          - mountPath: /tendermint/config
+            name: vs58
+        #resources:
+        #   requests:
+        #     cpu: "1"
+        #     memory: 2Gi
+          #limits:
+          #  cpu: "1"
+          #  memory: 2Gi
+      volumes:
+        - hostPath:
+            path: /home/centos/NFS500/network/tt5s8/config
+            type: ""
+          name: vs58
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  tt5s8
+  labels:
+    name: tt5s8
+    app: shardingbc
+spec:
+  selector:
+    name: tt5s8
+  type:  ClusterIP
+  clusterIP: 10.43.5.108
+  ports:
+  - name:  default
+    port:  42
+    targetPort:  42
+  - name:  p6
+    port:  26656
+    targetPort:  26656
+  - name:  p7
+    port:  26657
+    targetPort:  26657
+

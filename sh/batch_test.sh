@@ -43,7 +43,7 @@ main() {
         # 打印结果 分片数 片内节点数 发送速率 TPS
         echo "${shard} ${node} ${tx} $(tail -n 1 tps/tps.log | awk '{ print $5 }')" >> tps/batch.log
         echo "${shard} ${node} ${tx} $(tail -n 1 tps/tps.log | awk '{ print $5 }')"
-
+		mv sum.log ./tps/s_${shard}_${node}_${tx}.log
 #        # 等待日志落盘
 #        sleep 61
 #        # 日志转储 后续分析
