@@ -102,7 +102,7 @@ Node_str=""
 Node_str=${Node_str%?}
 
 #运行python，自动生成配置yaml文件
-python3 py/reBuildDCmaster.py $node_cnt $Node_str $shard $shard_count
+python3 py/reBuildDCmaster.py $node_cnt $Node_str $shard $shard_count $image
 
 #将genesis.json统一拷贝
 # echo $(cat $default_genesis | jq ".validators[0].power = \"1000\" ") > $default_genesis

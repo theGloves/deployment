@@ -1,0 +1,35 @@
+[
+[{
+                "ShardName":"0",
+                "NodeName":"tt0s1",
+                "Coordinate":"0",
+                "Peerid":"快照生成算法版本为: v2.0
+70b0ffba8d750b48911cf660d0ff607e3a5eb1be",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s2",
+                "Coordinate":"1",
+                "Peerid":"快照生成算法版本为: v2.0
+f6f5f7c183d7d7b9c73d25e6a921f25190d8b06c",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s3",
+                "Coordinate":"2",
+                "Peerid":"快照生成算法版本为: v2.0
+58e2bd47a67b0d7a290614c49e09b7ac7e6d2212",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s4",
+                "Coordinate":"3",
+                "Peerid":"快照生成算法版本为: v2.0
+cdacbf5a08312d6727dba406f74053ef0e17ed8d",
+                "Neighbor":""
+               
+            }]
+]

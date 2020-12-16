@@ -7,7 +7,7 @@
         "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
         "Home": "/home/centos",
         "Data": "/home/centos/NFS500",
-        "containerid": "15ef5971c48b",
+        "containerid": "ee5c8993e782",
         "image": "10.77.70.142:5000/shardingbc:v2.5"
     },
     "tendermint": {
@@ -18,7 +18,7 @@
         "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
         "Home": "/home/centos",
         "Data": "/home/centos/NFS500",
-        "containerid": "15ef5971c48b",
+        "containerid": "ee5c8993e782",
         "image": "10.77.70.142:5000/tendermint:0.31.4"
     },
     "topo": {
@@ -29,7 +29,7 @@
         "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
         "Home": "/home/centos",
         "Data": "/home/centos/NFS500",
-        "containerid": "15ef5971c48b",
+        "containerid": "ee5c8993e782",
         "image": "10.77.70.142:5000/topo:v2.4"
     }
 }
