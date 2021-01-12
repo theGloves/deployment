@@ -9,6 +9,6 @@ sum.log
 key/*
 .rancher
 batch.log
-./cache/*
+cache/*
 config/data.json
 config/shard.json
