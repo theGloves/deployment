@@ -1,0 +1,31 @@
+[
+[{
+                "ShardName":"0",
+                "NodeName":"tt0s1",
+                "Coordinate":"0",
+                "Peerid":"8f6c366f9812eb169bc221fb457553c04fbb0353",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s2",
+                "Coordinate":"1",
+                "Peerid":"88eff8b97e484afe005610e914657ddc05924781",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s3",
+                "Coordinate":"2",
+                "Peerid":"7123d4c98a22461c499bf47bfafa39af17182c1b",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s4",
+                "Coordinate":"3",
+                "Peerid":"d7b8bcc2242f4f7bcf511662513e25048226fa44",
+                "Neighbor":""
+               
+            }]
+]

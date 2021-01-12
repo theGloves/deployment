@@ -1,0 +1,59 @@
+[
+[{
+                "ShardName":"0",
+                "NodeName":"tt0s1",
+                "Coordinate":"0",
+                "Peerid":"11c578e1f9aea90a67b1bac531f8d5f4de6be6f6",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s2",
+                "Coordinate":"1",
+                "Peerid":"1350a1f6689490c93af4e96017e7e6d325909182",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s3",
+                "Coordinate":"2",
+                "Peerid":"f72b38b505801037df7cb3017ba9a3bbd5f466ea",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s4",
+                "Coordinate":"3",
+                "Peerid":"37f69fc2fcc0a9a4f537fbbafe8692569e85588a",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s5",
+                "Coordinate":"4",
+                "Peerid":"800e1d9521fdcab6dea24631aed845d8e3a38a32",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s6",
+                "Coordinate":"5",
+                "Peerid":"f779c3a46dcdcfcc1bf0542155d59839a0d7caf6",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s7",
+                "Coordinate":"6",
+                "Peerid":"b43034e1d93897487479cd934f66df0865e214a9",
+                "Neighbor":""
+            },
+{
+                "ShardName":"0",
+                "NodeName":"tt0s8",
+                "Coordinate":"7",
+                "Peerid":"e6382f93b2dabe6ed37ca6daae623605ffba3e5b",
+                "Neighbor":""
+               
+            }]
+]
