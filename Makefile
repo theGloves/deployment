@@ -10,7 +10,7 @@ install:
 clean:
 	# 根据label删除deployment&service
 	./bin/kubectl delete -n tendermint services,deployments -l app=shardingbc
-	curl -XPOST "http://127.0.0.1:9200/localtest-20201109/_delete_by_query" -H 'Content-Type: application/json' -d'{  "query": {    "terms": {      "@log_name": ["tendermint.error","tendermint.tps","tendermint.latency"]    }  }}'
+	#curl -XPOST "http://127.0.0.1:9200/localtest-20201109/_delete_by_query" -H 'Content-Type: application/json' -d'{  "query": {    "terms": {      "@log_name": ["tendermint.error","tendermint.tps","tendermint.latency"]    }  }}'
 
 # 快速部署应用
 quick:

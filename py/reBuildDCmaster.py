@@ -148,12 +148,12 @@ template = ""
 with open(template_filename, "r") as f:
     template = f.read()
 
-print(sys.argv)
+# print(sys.argv)
 # 生成persisitent_peers
-persisitent_peers = []
+persisitent_peers = ""
 for i in range(1, n_node+1):
     tmp_str = node_id[i-1]+"@tt"+shard+"s"+str(i)+":"+str(26656)
-    persisitent_peers.append(tmp_str)
+    persisitent_peers += tmp_str+","
 
 # 打开待写入的yaml文件
 f = open(filename, "w")
@@ -168,7 +168,7 @@ for i in range(1, n_node+1):
     parameters = {"node_name": name,
                   "shard_name": shard,
                   "image": image_name,
-                  "peers": peers_str,
+                  "peers": persisitent_peers,
                   "count": n_node,
                   "node_num": i,
                   "shard_num": shard,

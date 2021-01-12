@@ -1,4 +1,4 @@
-TAG="shardingbc"
+TAG="dev"
 
 workdir=$(echo $(cat config/config.json | jq ".${TAG}.depolymentpwd")|sed 's/\"//g')
 ted_dir=$(echo $(cat config/config.json | jq ".${TAG}.projectpwd")|sed 's/\"//g')
