@@ -10,3 +10,5 @@ key/*
 .rancher
 batch.log
 ./cache/*
+config/data.json
+config/shard.json

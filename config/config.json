@@ -1,5 +1,5 @@
 {
-    "shardingbc": {
+    "release": {
         "projectpwd": "/home/centos/go/src/github.com/shardingBC",
         "benchpwd": "/home/centos/go/src/github.com/shardingBC",
         "topopwd": "/home/centos/go/src/github.com/reconfiguration",
@@ -20,6 +20,17 @@
         "Data": "/home/centos/NFS500",
         "containerid": "ee5c8993e782",
         "image": "10.77.70.142:5000/tendermint:0.31.4"
+    },
+	"dev": {
+        "projectpwd": "/home/centos/go/src/github.com/shardingBC",
+        "benchpwd": "/home/centos/go/src/github.com/shardingBC",
+        "topopwd": "/home/centos/go/src/github.com/reconfiguration",
+        "projectbin": "/home/centos/go/bin",
+        "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
+        "Home": "/home/centos",
+        "Data": "/home/centos/NFS500",
+        "containerid": "ee5c8993e782",
+        "image": "10.77.70.142:5000/shardingbc:v3.1"
     },
     "topo": {
         "projectpwd": "/home/centos/go/src/github.com/reconfiguration",
