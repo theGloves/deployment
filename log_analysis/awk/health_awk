@@ -1,0 +1,17 @@
+#运行前
+BEGIN {
+    math = 0
+    english = 0
+    computer = 0
+ 
+    printf "validTxs,hscore,memSize,memLen,isFull\n"
+}
+#运行中
+{
+    if (/health statistics/){ #只收集health相关的数据
+        printf "%d,%.2f,%d,%d\n", $3, $4, $5, $6
+    }
+}
+#运行后
+END {
+}

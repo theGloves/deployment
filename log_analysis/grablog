@@ -1,0 +1,22 @@
+#! /bin/sh
+# format ./grab_healthlog [node_lists] [awkfilename] [outputfile]
+#input args：node_lists: 以逗号分割的需要收集日志的节点 outputfile: 输出的文件名(删除已有内容) awkfilename:awk脚本文件
+export PATH="../bin":$PATH # 注册
+
+node_str=$1
+awkfile=$2
+outputfile=$3
+tmpfile="grab-log-temp"
+
+node_list=${node_str//,/ }
+
+echo "" > $tmpfile # 清空文件
+
+for node in $node_list; do
+    kubectl logs --tail=-1 -n tendermint -l name=${node} >> ${tmpfile} 
+done
+
+echo "输出日志到"${outputfile}
+grep 'health statistics' ${tmpfile} | awk -f ${awkfile}> ${outputfile}
+
+rm -f ${tmpfile}
