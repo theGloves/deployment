@@ -8,7 +8,7 @@ BEGIN {
 }
 #运行中
 {
-    if (/health statistics/){ #只收集health相关的数据
+    if (/health statistics/&&$3>0){ #只收集health相关的数据
         printf "%d,%.2f,%d,%d\n", $3, $4, $5, $6
     }
 }
