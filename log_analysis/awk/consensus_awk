@@ -1,0 +1,26 @@
+#运行前
+BEGIN {
+    printf "height,validTxs,time\n"
+}
+
+function getVal(data,key){
+    for (i=1;i<=NF;i++){
+        if (match($i, key)){
+            split($i,tmp,"=")
+            return tmp[2]
+        }
+    }
+    return ""
+}
+
+#运行中
+{
+
+    height=getVal($0, "height")
+    costtime=getVal($0, "time")
+    validtxs=getVal($0, "txs")
+    printf "%s,%s,%s\n", height, validtxs, costtime
+}
+#运行后
+END {
+}

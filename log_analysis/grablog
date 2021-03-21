@@ -17,6 +17,7 @@ for node in $node_list; do
 done
 
 echo "输出日志到"${outputfile}
-grep 'health statistics' ${tmpfile} | awk -f ${awkfile}> ${outputfile}
+#grep 'health statistics' ${tmpfile} | awk -f ${awkfile}> ${outputfile}
+grep 'Committed state' ${tmpfile} | awk -f ${awkfile}> ${outputfile}
 
 rm -f ${tmpfile}
