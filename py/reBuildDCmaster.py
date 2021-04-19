@@ -150,10 +150,15 @@ with open(template_filename, "r") as f:
 
 # print(sys.argv)
 # 生成persisitent_peers
-persisitent_peers = ""
+persisitent_peers = []
 for i in range(1, n_node+1):
-    tmp_str = node_id[i-1]+"@tt"+shard+"s"+str(i)+":"+str(26656)
-    persisitent_peers += tmp_str+","
+    if i >=10:
+        tmp_str = node_id[i-1]+"@10.43."+shard+".1"+str(i)+":"+str(26656)
+        persisitent_peers.append(tmp_str)
+    else:
+        tmp_str = node_id[i-1]+"@10.43."+shard+".10"+str(i)+":"+str(26656)
+        persisitent_peers.append(tmp_str)    
+    # persisitent_peers += tmp_str+","
 
 # 打开待写入的yaml文件
 f = open(filename, "w")
@@ -168,7 +173,7 @@ for i in range(1, n_node+1):
     parameters = {"node_name": name,
                   "shard_name": shard,
                   "image": image_name,
-                  "peers": persisitent_peers,
+                  "peers": peers_str,
                   "count": n_node,
                   "node_num": i,
                   "shard_num": shard,

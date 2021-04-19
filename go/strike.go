@@ -74,10 +74,10 @@ func createStrikeTx(rate int, relay bool) []byte {
 	content, sig := createPrivContent(rate)
 	var txtype string
 	if relay {
-		txtype = "relaystrike"
+		txtype = "CrossSendStrikeTx"
 		fmt.Println("relay")
 	} else {
-		txtype = "addstrike"
+		txtype = "CrossReceiveStrikeTx"
 	}
 	tx := &TX{
 		Txtype:      txtype,

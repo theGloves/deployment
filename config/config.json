@@ -7,7 +7,7 @@
         "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
         "Home": "/home/centos",
         "Data": "/home/centos/NFS500",
-        "containerid": "ee5c8993e782",
+        "containerid": "6a38ec3d1e03",
         "image": "10.77.70.142:5000/shardingbc:v2.5"
     },
     "tendermint": {
@@ -18,18 +18,18 @@
         "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
         "Home": "/home/centos",
         "Data": "/home/centos/NFS500",
-        "containerid": "ee5c8993e782",
+        "containerid": "6a38ec3d1e03",
         "image": "10.77.70.142:5000/tendermint:0.31.4"
     },
 	"dev": {
         "projectpwd": "/home/centos/go/src/github.com/shardingBC",
         "benchpwd": "/home/centos/go/src/github.com/shardingBC",
-        "topopwd": "/home/centos/go/src/github.com/reconfiguration",
+        "topopwd": "/home/centos/go/src/github.com/reconfiguration_mnb",
         "projectbin": "/home/centos/go/bin",
         "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
         "Home": "/home/centos",
         "Data": "/home/centos/NFS500",
-        "containerid": "ee5c8993e782",
+        "containerid": "6a38ec3d1e03",
         "image": "10.77.70.142:5000/shardingbc:v3.1"
     },
     "topo": {
@@ -40,7 +40,29 @@
         "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
         "Home": "/home/centos",
         "Data": "/home/centos/NFS500",
-        "containerid": "ee5c8993e782",
+        "containerid": "6a38ec3d1e03",
         "image": "10.77.70.142:5000/topo:v2.4"
+    },
+    "topo_dev": {
+        "projectpwd": "/home/centos/go/src/github.com/reconfiguration_mnb",
+        "benchpwd": "/home/centos/go/src/github.com/shardingBC",
+        "topopwd": "/home/centos/go/src/github.com/reconfiguration_mnb",
+        "projectbin": "/home/centos/go/bin",
+        "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
+        "Home": "/home/centos",
+        "Data": "/home/centos/NFS500",
+        "containerid": "6a38ec3d1e03",
+        "image": "10.77.70.142:5000/topo_dev:v3.0"
+    },
+    "test_data": {
+        "projectpwd": "/home/centos/go/src/github.com/shardingBC",
+        "benchpwd": "/home/centos/go/src/github.com/shardingBC",
+        "topopwd": "/home/centos/go/src/github.com/reconfiguration_mnb",
+        "projectbin": "/home/centos/go/bin",
+        "depolymentpwd": "/home/centos/go/src/github.com/deployment_k8s",
+        "Home": "/home/centos",
+        "Data": "/home/centos/NFS500",
+        "containerid": "6a38ec3d1e03",
+        "image": "10.77.70.142:5000/testdata:v3.1"
     }
 }

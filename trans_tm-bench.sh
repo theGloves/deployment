@@ -5,13 +5,13 @@ ted_bin=$(echo $(cat config/config.json | jq ".projectbin")|sed 's/\"//g')
 home_pwd=$(echo $(cat config/config.json | jq ".Home")|sed 's/\"//g')
 container_id=$(echo $(cat config/config.json | jq ".containerid")|sed 's/\"//g')
 if [[ $1 > 0 ]]; then	
-	cd $ted_dir/tools/tm-bench
+	cd $ted_dir/tools/tm-bench_simulator
         make install
         cd $ted_bin
         echo "make done____________________________________________________________________"
-        cd $ted_bin;docker cp tm-bench $container_id:/dist
+        cd $ted_bin;docker cp tm-bench_simulator $container_id:/dist
 else
-	cd $bench_dir/tools/tm-bench
+	cd $bench_dir/tools/tm-bench_simulator
         make install
         cd $ted_bin
         echo "make done____________________________________________________________________"

@@ -105,7 +105,8 @@ Node_str=${Node_str%?}
 python3 py/reBuildDCmaster.py $node_cnt $Node_str $shard $shard_count $image
 
 #将genesis.json统一拷贝
-# echo $(cat $default_genesis | jq ".validators[0].power = \"1000\" ") > $default_genesis
+# 将leader权重改成1000
+echo $(cat $default_genesis | jq ".validators[0].power = \"100000\" ") > $default_genesis
 if [[ $shard_count = $shard_now ]];then
     echo "]" >> $workdir/topogensis.json
     if [[ $shard_now = 2 ]];then
